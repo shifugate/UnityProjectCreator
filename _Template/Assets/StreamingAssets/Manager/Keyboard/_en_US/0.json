@@ -1,0 +1,221 @@
+{
+	"font_release_color": "#CCEE00",
+	"font_press_color": "#CC33CC",
+	"space_row": 30,
+	"space_key": 30,
+	"margin_x": 20,
+	"margin_y": 30,
+	"rows": 
+	[
+		{
+			"font_release_color": "#FF0000",
+			"font_press_color": "#FF33CC",
+			"space_key": 40,
+			"keys":
+			[
+				{
+					"level0": 
+					{
+						"normal": "a",
+						"shifted": "A",
+						"normal_hold": ["á", "à", "â", "ã"],
+						"shifted_hold": ["Á", "À", "Â", "Ã"],
+					},
+				},
+				{
+					"level0": 
+					{
+						"normal": "\\",
+						"shifted": "|",
+					},
+				},
+				{
+					"level0": 
+					{
+						"font_release_color": "#FFCC00",
+						"font_press_color": "#FF3398",
+						"normal": "1",
+						"shifted": "!",
+					},
+				},
+				{
+					"level0": 
+					{
+						"font_release_color": "#FFCC00",
+						"font_press_color": "#FF3398",
+						"normal": "2",
+						"shifted": "\"",
+					},
+				},
+				{
+					"level0": 
+					{
+						"font_release_color": "#FFCC00",
+						"font_press_color": "#FF3398",
+						"normal": "3",
+						"shifted": "#",
+					},
+				},
+			],
+		},
+		{
+			"keys":
+			[
+				{
+					"level0": 
+					{
+						"normal": "q",
+						"shifted": "Q",
+					},
+				},
+				{
+					"level0": 
+					{
+						"normal": "w",
+						"shifted": "W",
+					},
+				},
+				{
+					"level0": 
+					{
+						"normal": "e",
+						"shifted": "E",
+						"normal_hold": ["é", "è", "ê"],
+						"shifted_hold": ["É", "È", "Ê"],
+					},
+				},
+				{
+					"level0": 
+					{
+						"font_release_color": "#FFCC00",
+						"font_press_color": "#FF3398",
+						"normal": "3",
+						"shifted": "#",
+					},
+				},
+				{
+					"level0": 
+					{
+						"normal": "e",
+						"shifted": "E",
+						"normal_hold": ["é", "è", "ê"],
+						"shifted_hold": ["É", "È", "Ê"],
+					},
+					"level1": 
+					{
+						"normal": "*",
+						"shifted": "*",
+					},
+					"level1": 
+					{
+						"normal": "-",
+						"shifted": "-",
+					},
+				},
+			],
+		},
+		{
+			"keys":
+			[
+				{
+					"level0": 
+					{
+						"shift": true,
+						"release_key": 
+						{ 
+							"file": "shift_normal_key.png"
+						},
+						"press_key": 
+						{
+							"file": "shift_press_key.png"
+						},
+						"lock_key": 
+						{
+							"file": "shift_lock_key.png"
+						},
+						"font_lock_color": "#00FFCC",
+					},
+					"level1": 
+					{
+						"swap": true,
+						"level": 2,
+						"normal": "=\\<",
+						"shifted": "=\\<",
+					},
+					"level2": 
+					{
+						"swap": true,
+						"level": 1,
+						"normal": "?123",
+						"shifted": "?123",
+					},
+				},
+				{
+					"level0": 
+					{
+						"enter": true,
+						"release_key": 
+						{ 
+							"file": "enter_normal_key.png"
+						},
+						"press_key": 
+						{
+							"file": "enter_press_key.png"
+						},
+					},
+				},
+				{
+					"level0": 
+					{
+						"swap": true,
+						"normal": "?123",
+						"shifted": "?123",
+						"level": 1,
+					},
+					"level1": 
+					{
+						"swap": true,
+						"normal": "ABC",
+						"shifted": "ABC",
+						"level": 0,
+					},
+					"level2": 
+					{
+						"swap": true,
+						"normal": "ABC",
+						"shifted": "ABC",
+						"level": 0,
+					},
+				},
+				{
+					"level0": 
+					{
+						"width_key": 300,
+						"normal": " ",
+						"shifted": " ",
+					},
+				},
+				{
+					"level0": 
+					{
+						"delete": true,
+						"release_key": 
+						{ 
+							"file": "delete_normal_key.png"
+						},
+						"press_key": 
+						{
+							"file": "delete_press_key.png"
+						},
+					},
+				},
+				{
+					"level0": 
+					{
+						"tab": true,
+					},
+				},
+			],
+		},
+	],
+}

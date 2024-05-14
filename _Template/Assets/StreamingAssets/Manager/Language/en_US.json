@@ -1,0 +1,13 @@
+{
+	"common": 
+	{
+		"error_token": "Error",
+		"accept_token": "Accept",
+		"close_token": "Close",
+	},
+	"splash": 
+	{
+		"message_0": "TEST 0 EN",
+		"message_1": "TEST 1 EN",
+	},
+}

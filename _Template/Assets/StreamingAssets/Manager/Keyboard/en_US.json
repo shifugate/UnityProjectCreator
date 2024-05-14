@@ -1,0 +1,40 @@
+{
+	"font_release_color": "#CC0000",
+	"font_press_color": "#CC00CC",
+	"font_release_hold_color": "#CEF00C",
+	"font_press_hold_color": "#E30CCC",
+	"release_key": 
+	{ 
+		"file": "normal_key.png",
+		"margin": [10, 20, 10, 10]
+	},
+	"press_key": 
+	{
+		"file": "press_key.png"
+	},
+	"release_hold_key": 
+	{ 
+		"file": "normal_key.png",
+		"margin": [10, 20, 10, 10]
+	},
+	"press_hold_key": 
+	{
+		"file": "press_key.png"
+	},
+	"background": 
+	{
+		"file": "normal_bg.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"width_key": 100,
+	"height_key": 100,
+	"space_row": 20,
+	"space_key": 20,
+	"margin_x": 20,
+	"margin_y": 20,
+	"start_at": 3,
+	"show_at": 3,
+	"show_margin": 50,
+	"click_time": 0.25,
+	"keyboards": [0, 1]
+}
