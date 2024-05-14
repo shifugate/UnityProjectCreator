@@ -35,8 +35,8 @@ namespace Assets._Scripts.Manager.Route
             HomeScene
         }
 
-        private bool loading;
-        public bool Loading { get { return loading; } }
+        private static bool loading;
+        public static bool Loading { get { return loading; } }
 
         private bool initialized;
         private object[] args;

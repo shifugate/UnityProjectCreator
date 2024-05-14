@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Assets._Scripts.Manager.Route;
+using Assets._Scripts.Manager;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -400,6 +402,21 @@ namespace Assets._Scripts.Util
             RenderTexture.active = null;
 
             return texture2D;
+        }
+
+        public static IEnumerator WaitInitializerManager()
+        {
+            yield return new WaitUntil(() => InitializerManager.InitializeComplete);
+        }
+
+        public static IEnumerator WaitRouterManager()
+        {
+            yield return new WaitUntil(() => !RouteManager.Loading);
+        }
+
+        public static IEnumerator WaitInitializeAndRouterManager()
+        {
+            yield return new WaitUntil(() => InitializerManager.InitializeComplete && !RouteManager.Loading);
         }
     }
 }
