@@ -19,7 +19,6 @@
             <CheckBox x:Name="TimeoutManagerCkb" Content="Use Timeout Manager" Margin="0, 0, 0, 10"/>
             <Button x:Name="StandAloneBtn" Content="Stand Alone" Click="StandAloneBtn_Click" Margin="0, 0, 0, 10"/>
             <Button x:Name="MobileBtn" Content="Mobile" Click="MobileBtn_Click" Margin="0, 0, 0, 10"/>
-            <Button x:Name="DeleteMetaBtn" Content="Delete Meta Files" Click="DeleteMetaBtn_Click" Margin="0, 0, 0, 10"/>
             <TextBlock x:Name="Status" Text="" TextAlignment="Center"/>
         </StackPanel>
     </Grid>
