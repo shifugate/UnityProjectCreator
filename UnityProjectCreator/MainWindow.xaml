@@ -16,7 +16,7 @@
                 <TextBox x:Name="ProjectTbk" Margin="0, 0, 0, 10"/>
             </DockPanel>
             <CheckBox x:Name="KeyboardManagerCkb" Content="Use Keyboard Manager (Not recomended for mobile)" Margin="0, 0, 0, 10"/>
-            <CheckBox x:Name="TimeoutManagerCkb" Content="Use Timeout Manager (Not recomended for mobile)" Margin="0, 0, 0, 10"/>
+            <CheckBox x:Name="TimeoutManagerCkb" Content="Use Timeout Manager" Margin="0, 0, 0, 10"/>
             <Button x:Name="StandAloneBtn" Content="Stand Alone" Click="StandAloneBtn_Click" Margin="0, 0, 0, 10"/>
             <Button x:Name="MobileBtn" Content="Mobile" Click="MobileBtn_Click" Margin="0, 0, 0, 10"/>
             <Button x:Name="DeleteMetaBtn" Content="Delete Meta Files" Click="DeleteMetaBtn_Click" Margin="0, 0, 0, 10"/>
