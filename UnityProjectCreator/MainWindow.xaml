@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnityProjectCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="240" Width="360">
+        Title="MainWindow" 
+        Width="360" 
+        SizeToContent="Height"
+        ResizeMode="NoResize">
     <Grid>
         <StackPanel Margin="10">
             <DockPanel HorizontalAlignment="Stretch">
@@ -13,6 +16,7 @@
                 <TextBox x:Name="ProjectTbk" Margin="0, 0, 0, 10"/>
             </DockPanel>
             <CheckBox x:Name="KeyboardManagerCkb" Content="Use Keyboard Manager (Not recomended for mobile)" Margin="0, 0, 0, 10"/>
+            <CheckBox x:Name="TimeoutManagerCkb" Content="Use Timeout Manager (Not recomended for mobile)" Margin="0, 0, 0, 10"/>
             <Button x:Name="StandAloneBtn" Content="Stand Alone" Click="StandAloneBtn_Click" Margin="0, 0, 0, 10"/>
             <Button x:Name="MobileBtn" Content="Mobile" Click="MobileBtn_Click" Margin="0, 0, 0, 10"/>
             <Button x:Name="DeleteMetaBtn" Content="Delete Meta Files" Click="DeleteMetaBtn_Click" Margin="0, 0, 0, 10"/>

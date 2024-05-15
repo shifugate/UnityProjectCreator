@@ -57,6 +57,17 @@ namespace UnityProjectCreator
                 File.WriteAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs", initializeManager);
             }
 
+            if (!useKeyboard)
+            {
+                Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Timeout", true);
+
+                string initializeManager = File.ReadAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs");
+                initializeManager = initializeManager.Replace("\r\nusing Assets._Scripts.Manager.Timeout;", "");
+                initializeManager = initializeManager.Replace("\r\n            TimeoutManager.InstanceNW(this);", "");
+
+                File.WriteAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs", initializeManager);
+            }
+
             if (standalone)
             {
                 FileUtil.CopyDirectory("_Template/Assets/StreamingAssets/Manager/Language", $"{projectName}/Assets/StreamingAssets/Manager/Language", true);
