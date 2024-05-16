@@ -4,7 +4,6 @@ using Assets._Scripts.Manager.Keyboard.Row;
 using DG.Tweening;
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +29,48 @@ namespace Assets._Scripts.Manager.Keyboard.Board
 
         private bool showing = true;
 
+        private Coroutine showCR;
         private Coroutine hideCR;
+
+        private void Awake()
+        {
+            AddListener();
+        }
+
+        private void OnDestroy()
+        {
+            RemoveListener();
+        }
+
+        private void AddListener()
+        {
+            KeyboardManager.Instance.onKeyboardManagerUpdateChange.AddListener(OnKeyboardManagerUpdateChange);
+            KeyboardManager.Instance.onKeyboardManagerUpdateLevel.AddListener(OnKeyboardManagerUpdateLevel);
+        }
+
+        private void RemoveListener()
+        {
+            KeyboardManager.Instance.onKeyboardManagerUpdateChange.RemoveListener(OnKeyboardManagerUpdateChange);
+            KeyboardManager.Instance.onKeyboardManagerUpdateLevel.RemoveListener(OnKeyboardManagerUpdateLevel);
+        }
+
+        private void OnKeyboardManagerUpdateChange()
+        {
+            SetContent();
+        }
+
+        private void OnKeyboardManagerUpdateLevel()
+        {
+            SetContent();
+        }
+
+        private void SetContent()
+        {
+            SetSpace();
+            SetMargin();
+            SetTextures();
+            SetRows();
+        }
 
         private void SetSpace()
         {
@@ -51,7 +91,15 @@ namespace Assets._Scripts.Manager.Keyboard.Board
 
         private void SetRows()
         {
-            foreach (KeyboardRowModel keyboardRowModel in keyboardKeyboardModel.rows)
+            foreach (Transform transform in rowHolder)
+                Destroy(transform.gameObject);
+
+            if (KeyboardManager.Instance.Level >= keyboardKeyboardModel.levels.Count)
+                return;
+
+            KeyboardLevelModel levelModel = keyboardKeyboardModel.levels[KeyboardManager.Instance.Level];
+
+            foreach (KeyboardRowModel keyboardRowModel in levelModel.rows)
                 Instantiate(keyboardRow, rowHolder).Setup(keyboardRowModel);
         }
 
@@ -197,6 +245,13 @@ namespace Assets._Scripts.Manager.Keyboard.Board
                 .OnComplete(() => KeyboardManagerEvent.OnShowComplete?.Invoke(this));
         }
 
+        private IEnumerator ShowCR(Action completeCallback)
+        {
+            yield return null;
+
+            SetShow(completeCallback);
+        }
+
         private IEnumerator HideCR()
         {
             yield return null;
@@ -211,27 +266,30 @@ namespace Assets._Scripts.Manager.Keyboard.Board
 
             name = "KEYBOARDMANAGER";
 
-            SetSpace();
-            SetMargin();
-            SetTextures();
-            SetRows();
+            SetContent();
             SetStart();
 
             return this;
         }
 
-        public void Show(Action completeCallback)
+        public void Show(Action completeCallback = null)
         {
+            if (showCR != null)
+                StopCoroutine(showCR);
+
             if (hideCR != null)
                 StopCoroutine(hideCR);
 
-            SetShow(completeCallback);
+            showCR = StartCoroutine(ShowCR(completeCallback));
         }
 
         public void Hide()
         {
             if (!gameObject.activeInHierarchy)
                 return;
+
+            if (showCR != null)
+                StopCoroutine(showCR);
 
             if (hideCR != null)
                 StopCoroutine(hideCR);

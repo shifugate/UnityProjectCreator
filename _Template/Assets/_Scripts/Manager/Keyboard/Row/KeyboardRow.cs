@@ -16,38 +16,6 @@ namespace Assets._Scripts.Manager.Keyboard.Row
 
         private KeyboardRowModel keyboardRowModel;
 
-        private void Awake()
-        {
-            AddListener();
-        }
-
-        private void OnDestroy()
-        {
-            RemoveListener();
-        }
-
-        private void AddListener()
-        {
-            KeyboardManager.Instance.onKeyboardManagerUpdateChange.AddListener(OnKeyboardManagerUpdateChange);
-            KeyboardManager.Instance.onKeyboardManagerUpdateLevel.AddListener(OnKeyboardManagerUpdateLevel);
-        }
-
-        private void RemoveListener()
-        {
-            KeyboardManager.Instance.onKeyboardManagerUpdateChange.RemoveListener(OnKeyboardManagerUpdateChange);
-            KeyboardManager.Instance.onKeyboardManagerUpdateLevel.RemoveListener(OnKeyboardManagerUpdateLevel);
-        }
-
-        private void OnKeyboardManagerUpdateChange()
-        {
-            SetContent();
-        }
-
-        private void OnKeyboardManagerUpdateLevel()
-        {
-            SetContent();
-        }
-
         private void SetContent() 
         {
             SetSpace();
@@ -71,7 +39,7 @@ namespace Assets._Scripts.Manager.Keyboard.Row
                 Destroy(transform.gameObject);
 
             foreach (KeyboardKeyModel keyboardKeyModel in keyboardRowModel.keys)
-                Instantiate(keyboardKey, rowHolder).Setup(KeyboardManager.Instance.GetLevel(keyboardKeyModel));
+                Instantiate(keyboardKey, rowHolder).Setup(keyboardKeyModel);
         }
 
         public KeyboardRow Setup(KeyboardRowModel keyboardRowModel)

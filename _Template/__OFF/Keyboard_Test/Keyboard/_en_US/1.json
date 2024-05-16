@@ -1,0 +1,133 @@
+{
+	"levels":
+	[
+		{
+			"rows":
+			[
+				{
+					"keys":
+					[
+						{
+							"normal": "\\",
+							"shifted": "|",
+						},
+						{
+							"normal": "1",
+							"shifted": "!",
+						},
+					],
+				},
+				{
+					"keys":
+					[
+						{
+							"normal": "w",
+							"shifted": "W",
+						},
+						{
+							"normal": "e",
+							"shifted": "E",
+							"normal_hold": ["é", "è", "ê"],
+							"shifted_hold": ["É", "È", "Ê"],
+						},
+					],
+				},
+				{
+					"keys":
+					[
+						{
+							"shift": true,
+							"release_key": 
+							{ 
+								"file": "shift_normal_key.png"
+							},
+							"press_key": 
+							{
+								"file": "shift_press_key.png"
+							},
+							"lock_key": 
+							{
+								"file": "shift_lock_key.png"
+							},
+						},
+						{
+							"enter": true,
+							"release_key": 
+							{ 
+								"file": "enter_normal_key.png"
+							},
+							"press_key": 
+							{
+								"file": "enter_press_key.png"
+							},
+						},
+						{
+							"swap": true,
+							"normal": "?123",
+							"shifted": "?123",
+							"level": 1,
+						},
+						{
+							"width_key": 300,
+							"normal": " ",
+							"shifted": " ",
+						},
+						{
+							"delete": true,
+							"release_key": 
+							{ 
+								"file": "delete_normal_key.png"
+							},
+							"press_key": 
+							{
+								"file": "delete_press_key.png"
+							},
+						},
+						{
+							"tab": true,
+						},
+					],
+				},
+			],
+		},
+		{
+			"rows":
+			[
+				{
+					"keys":
+					[
+						{
+							"normal": "0",
+							"shifted": "|",
+						},
+						{
+							"normal": "1",
+							"shifted": "!",
+						},
+					],
+				},
+				{
+					"keys":
+					[
+						{
+							"normal": "w",
+							"shifted": "W",
+						},
+						{
+							"normal": "e",
+							"shifted": "E",
+							"normal_hold": ["é", "è", "ê"],
+							"shifted_hold": ["É", "È", "Ê"],
+						},
+						{
+							"swap": true,
+							"normal": "?123",
+							"shifted": "?123",
+							"level": 0,
+						},
+					],
+				},
+			],
+		},
+	],
+}

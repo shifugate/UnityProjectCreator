@@ -13,6 +13,7 @@ using Assets._Scripts.Manager.Language;
 using Assets._Scripts.Manager.Keyboard.Key;
 using UnityEngine.Events;
 using Assets._Scripts.Manager.Keyboard.Event;
+using UnityEngine.TextCore.Text;
 
 namespace Assets._Scripts.Manager.Keyboard
 {
@@ -43,9 +44,6 @@ namespace Assets._Scripts.Manager.Keyboard
             Normal,
             Email,
             Numeric,
-            Normal_Mobile,
-            Email_Mobile,
-            Numeric_Mobile,
         }
 
         public enum Direction 
@@ -105,6 +103,9 @@ namespace Assets._Scripts.Manager.Keyboard
         public int Level { get { return level; } }
 
         private int tabIndex;
+
+        private string character;
+        private string accent;
 
         private void Update()
         {
@@ -191,16 +192,21 @@ namespace Assets._Scripts.Manager.Keyboard
                             foreach (KeyboardBoard keyboard in keyboardBoards)
                             {
                                 if (keyboard.KeyboardKeyboardModel.type == keyboardData.type && keyboard.KeyboardKeyboardModel.language == LanguageManager.Instance.Language)
-                                    keyboard.Show(() =>
-                                    {
-                                        shifted = false;
-                                        shiftedLocked = false;
-                                        level = 0;
+                                {
+                                    character = null;
+                                    accent = null;
+                                    shifted = false;
+                                    shiftedLocked = false;
+                                    level = 0;
 
-                                        onKeyboardManagerUpdateChange?.Invoke();
-                                    });
+                                    onKeyboardManagerUpdateChange?.Invoke();
+
+                                    keyboard.Show();
+                                }
                                 else
+                                {
                                     keyboard.Hide();
+                                }
                             }
                         }
                     }
@@ -322,10 +328,10 @@ namespace Assets._Scripts.Manager.Keyboard
             if (keyboardKeyboardModel.space_key == 0)
                 keyboardKeyboardModel.space_key = keyboardModel.space_key;
 
-            if (keyboardKeyboardModel.margin_y == 0)
-                keyboardKeyboardModel.margin_y = keyboardModel.margin_y;
-
             if (keyboardKeyboardModel.margin_x == 0)
+                keyboardKeyboardModel.margin_x = keyboardModel.margin_x;
+
+            if (keyboardKeyboardModel.margin_y == 0)
                 keyboardKeyboardModel.margin_y = keyboardModel.margin_y;
 
             if (keyboardKeyboardModel.start_at == null)
@@ -342,10 +348,79 @@ namespace Assets._Scripts.Manager.Keyboard
 
             SetSprite(keyboardKeyboardModel.release_key);
             SetSprite(keyboardKeyboardModel.press_key);
+            SetSprite(keyboardKeyboardModel.release_hold_key);
+            SetSprite(keyboardKeyboardModel.press_hold_key);
             SetSprite(keyboardKeyboardModel.lock_key);
             SetSprite(keyboardKeyboardModel.background);
 
-            foreach (KeyboardRowModel keyboardRowModel in keyboardKeyboardModel.rows)
+            foreach (KeyboardLevelModel keyboardLevelModel in keyboardKeyboardModel.levels)
+                SetLevelData(keyboardKeyboardModel, keyboardLevelModel);
+        }
+
+        private void SetLevelData(KeyboardKeyboardModel keyboardKeyboardModel, KeyboardLevelModel keyboardLevelModel)
+        {
+            if (keyboardKeyboardModel.font_release_color == null)
+                keyboardKeyboardModel.font_release_color = keyboardLevelModel.font_release_color;
+
+            if (keyboardKeyboardModel.font_press_color == null)
+                keyboardKeyboardModel.font_press_color = keyboardLevelModel.font_press_color;
+
+            if (keyboardKeyboardModel.font_release_hold_color == null)
+                keyboardKeyboardModel.font_release_hold_color = keyboardLevelModel.font_release_hold_color;
+
+            if (keyboardKeyboardModel.font_press_hold_color == null)
+                keyboardKeyboardModel.font_press_hold_color = keyboardLevelModel.font_press_hold_color;
+
+            if (keyboardKeyboardModel.font_lock_color == null)
+                keyboardKeyboardModel.font_lock_color = keyboardLevelModel.font_lock_color;
+
+            if (keyboardKeyboardModel.release_key == null)
+                keyboardKeyboardModel.release_key = keyboardLevelModel.release_key;
+
+            if (keyboardKeyboardModel.press_key == null)
+                keyboardKeyboardModel.press_key = keyboardLevelModel.press_key;
+
+            if (keyboardKeyboardModel.release_hold_key == null)
+                keyboardKeyboardModel.release_hold_key = keyboardLevelModel.release_hold_key;
+
+            if (keyboardKeyboardModel.press_hold_key == null)
+                keyboardKeyboardModel.press_hold_key = keyboardLevelModel.press_hold_key;
+
+            if (keyboardKeyboardModel.lock_key == null)
+                keyboardKeyboardModel.lock_key = keyboardLevelModel.lock_key;
+
+            if (keyboardKeyboardModel.background == null)
+                keyboardKeyboardModel.background = keyboardLevelModel.background;
+
+            if (keyboardKeyboardModel.width_key == 0)
+                keyboardKeyboardModel.width_key = keyboardLevelModel.width_key;
+
+            if (keyboardKeyboardModel.height_key == 0)
+                keyboardKeyboardModel.height_key = keyboardLevelModel.height_key;
+
+            if (keyboardKeyboardModel.space_row == 0)
+                keyboardKeyboardModel.space_row = keyboardLevelModel.space_row;
+
+            if (keyboardKeyboardModel.space_key == 0)
+                keyboardKeyboardModel.space_key = keyboardLevelModel.space_key;
+
+            if (keyboardKeyboardModel.margin_x == 0)
+                keyboardKeyboardModel.margin_x = keyboardLevelModel.margin_x;
+
+            if (keyboardKeyboardModel.margin_y == 0)
+                keyboardKeyboardModel.margin_y = keyboardLevelModel.margin_y;
+
+            if (keyboardKeyboardModel.click_time == 0)
+                keyboardKeyboardModel.click_time = keyboardLevelModel.click_time;
+
+            SetSprite(keyboardKeyboardModel.release_key);
+            SetSprite(keyboardKeyboardModel.press_key);
+            SetSprite(keyboardKeyboardModel.release_hold_key);
+            SetSprite(keyboardKeyboardModel.press_hold_key);
+            SetSprite(keyboardKeyboardModel.lock_key);
+            SetSprite(keyboardKeyboardModel.background);
+
+            foreach (KeyboardRowModel keyboardRowModel in keyboardLevelModel.rows)
                 SetRowData(keyboardKeyboardModel, keyboardRowModel);
         }
 
@@ -396,10 +471,10 @@ namespace Assets._Scripts.Manager.Keyboard
             if (keyboardRowModel.space_key == 0)
                 keyboardRowModel.space_key = keyboardKeyboardModel.space_key;
 
-            if (keyboardRowModel.margin_y == 0)
-                keyboardRowModel.margin_y = keyboardKeyboardModel.margin_y;
-
             if (keyboardRowModel.margin_x == 0)
+                keyboardRowModel.margin_x = keyboardKeyboardModel.margin_x;
+
+            if (keyboardRowModel.margin_y == 0)
                 keyboardRowModel.margin_y = keyboardKeyboardModel.margin_y;
 
             if (keyboardRowModel.click_time == 0)
@@ -407,6 +482,8 @@ namespace Assets._Scripts.Manager.Keyboard
 
             SetSprite(keyboardRowModel.release_key);
             SetSprite(keyboardRowModel.press_key);
+            SetSprite(keyboardRowModel.release_hold_key);
+            SetSprite(keyboardRowModel.press_hold_key);
             SetSprite(keyboardRowModel.lock_key);
             SetSprite(keyboardRowModel.background);
 
@@ -461,10 +538,10 @@ namespace Assets._Scripts.Manager.Keyboard
             if (keyboardKeyModel.space_key == 0)
                 keyboardKeyModel.space_key = keyboardRowModel.space_key;
 
-            if (keyboardKeyModel.margin_y == 0)
-                keyboardKeyModel.margin_y = keyboardRowModel.margin_y;
-
             if (keyboardKeyModel.margin_x == 0)
+                keyboardKeyModel.margin_x = keyboardRowModel.margin_x;
+
+            if (keyboardKeyModel.margin_y == 0)
                 keyboardKeyModel.margin_y = keyboardRowModel.margin_y;
 
             if (keyboardKeyModel.click_time == 0)
@@ -472,74 +549,10 @@ namespace Assets._Scripts.Manager.Keyboard
 
             SetSprite(keyboardKeyModel.release_key);
             SetSprite(keyboardKeyModel.press_key);
+            SetSprite(keyboardKeyModel.release_hold_key);
+            SetSprite(keyboardKeyModel.press_hold_key);
             SetSprite(keyboardKeyModel.lock_key);
             SetSprite(keyboardKeyModel.background);
-
-            SetLevelData(keyboardKeyModel, keyboardKeyModel.level0);
-            SetLevelData(keyboardKeyModel, keyboardKeyModel.level1);
-            SetLevelData(keyboardKeyModel, keyboardKeyModel.level2);
-        }
-        
-        private void SetLevelData(KeyboardKeyModel keyboardKeyModel, KeyboardKeyLevelModel keyboardKeyLevelModel)
-        {
-            if (keyboardKeyLevelModel.font_release_color == null)
-                keyboardKeyLevelModel.font_release_color = keyboardKeyModel.font_release_color;
-
-            if (keyboardKeyLevelModel.font_press_color == null)
-                keyboardKeyLevelModel.font_press_color = keyboardKeyModel.font_press_color;
-
-            if (keyboardKeyLevelModel.font_release_hold_color == null)
-                keyboardKeyLevelModel.font_release_hold_color = keyboardKeyModel.font_release_hold_color;
-
-            if (keyboardKeyLevelModel.font_press_hold_color == null)
-                keyboardKeyLevelModel.font_press_hold_color = keyboardKeyModel.font_press_hold_color;
-
-            if (keyboardKeyLevelModel.font_lock_color == null)
-                keyboardKeyLevelModel.font_lock_color = keyboardKeyModel.font_lock_color;
-
-            if (keyboardKeyLevelModel.release_key == null)
-                keyboardKeyLevelModel.release_key = keyboardKeyModel.release_key;
-
-            if (keyboardKeyLevelModel.press_key == null)
-                keyboardKeyLevelModel.press_key = keyboardKeyModel.press_key;
-
-            if (keyboardKeyLevelModel.release_hold_key == null)
-                keyboardKeyLevelModel.release_hold_key = keyboardKeyModel.release_hold_key;
-
-            if (keyboardKeyLevelModel.press_hold_key == null)
-                keyboardKeyLevelModel.press_hold_key = keyboardKeyModel.press_hold_key;
-
-            if (keyboardKeyLevelModel.lock_key == null)
-                keyboardKeyLevelModel.lock_key = keyboardKeyModel.lock_key;
-
-            if (keyboardKeyLevelModel.background == null)
-                keyboardKeyLevelModel.background = keyboardKeyModel.background;
-
-            if (keyboardKeyLevelModel.width_key == 0)
-                keyboardKeyLevelModel.width_key = keyboardKeyModel.width_key;
-
-            if (keyboardKeyLevelModel.height_key == 0)
-                keyboardKeyLevelModel.height_key = keyboardKeyModel.height_key;
-
-            if (keyboardKeyLevelModel.space_row == 0)
-                keyboardKeyLevelModel.space_row = keyboardKeyModel.space_row;
-
-            if (keyboardKeyLevelModel.space_key == 0)
-                keyboardKeyLevelModel.space_key = keyboardKeyModel.space_key;
-
-            if (keyboardKeyLevelModel.margin_y == 0)
-                keyboardKeyLevelModel.margin_y = keyboardKeyModel.margin_y;
-
-            if (keyboardKeyLevelModel.margin_x == 0)
-                keyboardKeyLevelModel.margin_y = keyboardKeyModel.margin_y;
-
-            if (keyboardKeyLevelModel.click_time == 0)
-                keyboardKeyLevelModel.click_time = keyboardKeyModel.click_time;
-
-            SetSprite(keyboardKeyLevelModel.release_key);
-            SetSprite(keyboardKeyLevelModel.press_key);
-            SetSprite(keyboardKeyLevelModel.lock_key);
-            SetSprite(keyboardKeyLevelModel.background);
         }
 
         private void SetSprite(KeyboardSpriteModel spriteModel)
@@ -665,8 +678,59 @@ namespace Assets._Scripts.Manager.Keyboard
             focusCR = StartCoroutine(FocusCR());
         }
 
-        public void KeyClick(Key key, string text = null, int? level = null)
+        public void KeyClick(Key key, string text = null, int? level = null, KeyboardKeyModel model = null)
         {
+            if (character != null && accent != null)
+            {
+                string[] split0 = accent.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries );
+
+                if (split0.Length > 0)
+                {
+                    foreach (string s0 in split0)
+                    {
+                        string[] split1 = s0.Split("=");
+
+                        if (split1.Length != 2)
+                            continue;
+
+                        string[] split2 = split1[0].Split('+');
+
+                        if (split2.Length != 2)
+                            continue;
+
+                        if (split2[1].Equals(text))
+                        {
+                            character = split1[1];
+                            accent = null;
+
+                            break;
+                        }
+                    }
+                }
+
+                if (accent != null)
+                    character += text;
+
+                shifted = false;
+
+                if (inputField != null)
+                {
+                    if (!string.IsNullOrEmpty(character) && !inputField.fontAsset.HasCharacters(character, out uint[] missing, false, true))
+                        character = "";
+
+                    inputField.text += character;
+                }
+
+                character = null;
+                accent = null;
+
+                onKeyboardManagerUpdateKey?.Invoke();
+
+                UpdateFocus();
+
+                return;
+            }
+
             switch(key)
             {
                 case Key.Shift:
@@ -735,10 +799,30 @@ namespace Assets._Scripts.Manager.Keyboard
 
                     break;
                 case Key.Text: 
+                    if (model?.accents_normal != null && !shifted)
+                    {
+                        character = text;
+                        accent = model.accents_normal;
+
+                        break;
+                    }
+                    else if (model?.accents_shifted != null && shifted)
+                    {
+                        character = text;
+                        accent = model.accents_shifted;
+
+                        break;
+                    }
+
                     shifted = false;
 
                     if (inputField != null)
+                    {
+                        if (!string.IsNullOrEmpty(text) && !inputField.fontAsset.HasCharacters(text, out uint[] missing, false, true))
+                            text = "";
+
                         inputField.text += text;
+                    }
 
                     onKeyboardManagerUpdateKey?.Invoke();
 
@@ -746,16 +830,6 @@ namespace Assets._Scripts.Manager.Keyboard
 
                     break;
             }
-        }
-
-        public KeyboardKeyLevelModel GetLevel(KeyboardKeyModel keyboardKeyModel)
-        {
-            if (level == 1)
-                return keyboardKeyModel.level1;
-            if (level == 2)
-                return keyboardKeyModel.level2;
-
-            return keyboardKeyModel.level0;
         }
     }
 }

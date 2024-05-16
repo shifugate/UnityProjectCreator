@@ -7,6 +7,6 @@ namespace Assets._Scripts.Manager.Keyboard.Model
     {
         public string language;
         public KeyboardManager.Type type;
-        public List<KeyboardRowModel> rows = new List<KeyboardRowModel>();
+        public List<KeyboardLevelModel> levels = new List<KeyboardLevelModel>();
     }
 }

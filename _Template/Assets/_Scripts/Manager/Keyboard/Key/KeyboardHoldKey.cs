@@ -18,7 +18,7 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         public string Key { get { return keyText.text; } }
 
-        private KeyboardKeyLevelModel keyboardKeyLevelModel;
+        private KeyboardKeyModel keyboardKeyModel;
 
         private string key;
 
@@ -29,16 +29,16 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void SetSize()
         {
-            rectTransform.sizeDelta = new Vector2(keyboardKeyLevelModel.width_key, keyboardKeyLevelModel.height_key);
+            rectTransform.sizeDelta = new Vector2(keyboardKeyModel.width_key, keyboardKeyModel.height_key);
         }
 
         private void SetTextures()
         {
-            releaseImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyLevelModel.release_hold_key);
+            releaseImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyModel.release_hold_key);
             releaseImage.type = KeyboardManager.Instance.HasSpriteBorder(releaseImage.sprite) ? Image.Type.Sliced : Image.Type.Simple;
             releaseImage.gameObject.SetActive(releaseImage.sprite != null);
 
-            pressImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyLevelModel.press_hold_key);
+            pressImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyModel.press_hold_key);
             pressImage.type = KeyboardManager.Instance.HasSpriteBorder(pressImage.sprite) ? Image.Type.Sliced : Image.Type.Simple;
             pressImage.gameObject.SetActive(pressImage.sprite != null);
             pressImage.color = new Color(1, 1, 1, 0);
@@ -46,8 +46,8 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void SetColors()
         {
-            ColorUtility.TryParseHtmlString(keyboardKeyLevelModel.font_release_hold_color, out fontReleaseColor);
-            ColorUtility.TryParseHtmlString(keyboardKeyLevelModel.font_press_hold_color, out fontPressColor);
+            ColorUtility.TryParseHtmlString(keyboardKeyModel.font_release_hold_color, out fontReleaseColor);
+            ColorUtility.TryParseHtmlString(keyboardKeyModel.font_press_hold_color, out fontPressColor);
         }
 
         private void SetText()
@@ -56,9 +56,9 @@ namespace Assets._Scripts.Manager.Keyboard.Key
             keyText.color = fontReleaseColor;
         }
 
-        public KeyboardHoldKey Setup(KeyboardKeyLevelModel keyboardKeyLevelModel, string key)
+        public KeyboardHoldKey Setup(KeyboardKeyModel keyboardKeyModel, string key)
         {
-            this.keyboardKeyLevelModel = keyboardKeyLevelModel;
+            this.keyboardKeyModel = keyboardKeyModel;
             this.key = key;
 
             name = "KEYBOARDMANAGER_KEY";

@@ -1,0 +1,82 @@
+{
+  "levels": [
+    {
+      "rows": [
+        {
+          "keys": [
+            {
+              "normal": "1",
+              "shifted": "1"
+            },
+            {
+              "normal": "2",
+              "shifted": "2"
+            },
+            {
+              "normal": "3",
+              "shifted": "3"
+            }
+          ]
+        },
+        {
+          "keys": [
+            {
+              "normal": "4",
+              "shifted": "4"
+            },
+            {
+              "normal": "5",
+              "shifted": "5"
+            },
+            {
+              "normal": "6",
+              "shifted": "6"
+            }
+          ]
+        },
+        {
+          "keys": [
+            {
+              "normal": "7",
+              "shifted": "7"
+            },
+            {
+              "normal": "8",
+              "shifted": "8"
+            },
+            {
+              "normal": "9",
+              "shifted": "9"
+            }
+          ]
+        },
+        {
+          "keys": [
+            {
+              "delete": true,
+              "release_key": {
+                "file": "delete_normal_key.png"
+              },
+              "press_key": {
+                "file": "delete_press_key.png"
+              }
+            },
+            {
+              "normal": "0",
+              "shifted": "0"
+            },
+            {
+              "enter": true,
+              "release_key": {
+                "file": "enter_normal_key.png"
+              },
+              "press_key": {
+                "file": "enter_press_key.png"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

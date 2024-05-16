@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.Manager.Keyboard.Model;
 using Assets._Scripts.Util;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         public string Key { get { return keyText.text; } }
 
-        private KeyboardKeyLevelModel keyboardKeyLevelModel;
+        private KeyboardKeyModel KeyboardKeyModel;
 
         private List<string> holdList;
 
@@ -89,7 +90,7 @@ namespace Assets._Scripts.Manager.Keyboard.Key
         {
             shiftTime += Time.deltaTime;
 
-            if (shiftTime > keyboardKeyLevelModel.click_time)
+            if (shiftTime > KeyboardKeyModel.click_time)
             {
                 shiftTime = 0;
                 shitClicks = 0;
@@ -111,14 +112,14 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
             time += Time.deltaTime;
 
-            if (time <= keyboardKeyLevelModel.click_time)
+            if (time <= KeyboardKeyModel.click_time)
                 return;
 
-            holdList = KeyboardManager.Instance.Shifted || KeyboardManager.Instance.ShiftedLocked ? keyboardKeyLevelModel.shifted_hold : keyboardKeyLevelModel.normal_hold;
+            holdList = KeyboardManager.Instance.Shifted || KeyboardManager.Instance.ShiftedLocked ? KeyboardKeyModel.shifted_hold : KeyboardKeyModel.normal_hold;
 
             if (holdList != null && holdList.Count > 0 && holdHolder.childCount == 0)
                 foreach (string key in holdList)
-                    Instantiate(keyboardHoldKey, holdHolder).Setup(keyboardKeyLevelModel, key);
+                    Instantiate(keyboardHoldKey, holdHolder).Setup(KeyboardKeyModel, key);
 
             if (!holdHolder.parent.Equals(keyboardTransform))
             {
@@ -149,11 +150,11 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void UpdateHolder()
         {
-            if (keyboardKeyLevelModel == null || !holdHolder.parent.Equals(keyboardTransform))
+            if (KeyboardKeyModel == null || !holdHolder.parent.Equals(keyboardTransform))
                 return;
 
             float x = position.x;
-            float y = position.y + keyboardKeyLevelModel.height_key;
+            float y = position.y + KeyboardKeyModel.height_key;
 
             if (x - holdHolder.rect.width / 2 < -keyboardTransform.rect.width / 2)
                 x = -keyboardTransform.rect.width / 2 + holdHolder.rect.width / 2;
@@ -170,12 +171,12 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void UpdateSate()
         {
-            if (KeyboardManager.Instance.Shifted && keyboardKeyLevelModel.shift)
+            if (KeyboardManager.Instance.Shifted && KeyboardKeyModel.shift)
             {
                 keyText.color = fontPressColor;
                 pressImage.color = new Color(1, 1, 1, 1);
             }
-            else if (KeyboardManager.Instance.ShiftedLocked && keyboardKeyLevelModel.shift)
+            else if (KeyboardManager.Instance.ShiftedLocked && KeyboardKeyModel.shift)
             {
                 keyText.color = fontLockColor;
                 pressImage.color = new Color(1, 1, 1, 0);
@@ -191,21 +192,21 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void SetSize()
         {
-            rectTransform.sizeDelta = new Vector2(keyboardKeyLevelModel.width_key, keyboardKeyLevelModel.height_key);
+            rectTransform.sizeDelta = new Vector2(KeyboardKeyModel.width_key, KeyboardKeyModel.height_key);
         }
 
         private void SetTextures()
         {
-            releaseImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyLevelModel.release_key);
+            releaseImage.sprite = KeyboardManager.Instance.GetSprite(KeyboardKeyModel.release_key);
             releaseImage.type = KeyboardManager.Instance.HasSpriteBorder(releaseImage.sprite) ? Image.Type.Sliced : Image.Type.Simple;
             releaseImage.gameObject.SetActive(releaseImage.sprite != null);
 
-            pressImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyLevelModel.press_key);
+            pressImage.sprite = KeyboardManager.Instance.GetSprite(KeyboardKeyModel.press_key);
             pressImage.type = KeyboardManager.Instance.HasSpriteBorder(pressImage.sprite) ? Image.Type.Sliced : Image.Type.Simple;
             pressImage.gameObject.SetActive(pressImage.sprite != null);
             pressImage.color = new Color(1, 1, 1, 0);
 
-            lockImage.sprite = KeyboardManager.Instance.GetSprite(keyboardKeyLevelModel.lock_key);
+            lockImage.sprite = KeyboardManager.Instance.GetSprite(KeyboardKeyModel.lock_key);
             lockImage.type = KeyboardManager.Instance.HasSpriteBorder(lockImage.sprite) ? Image.Type.Sliced : Image.Type.Simple;
             lockImage.gameObject.SetActive(lockImage.sprite != null);
             lockImage.color = new Color(1, 1, 1, 0);
@@ -213,20 +214,29 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
         private void SetColors()
         {
-            ColorUtility.TryParseHtmlString(keyboardKeyLevelModel.font_release_color, out fontReleaseColor);
-            ColorUtility.TryParseHtmlString(keyboardKeyLevelModel.font_press_color, out fontPressColor);
-            ColorUtility.TryParseHtmlString(keyboardKeyLevelModel.font_lock_color, out fontLockColor);
+            ColorUtility.TryParseHtmlString(KeyboardKeyModel.font_release_color, out fontReleaseColor);
+            ColorUtility.TryParseHtmlString(KeyboardKeyModel.font_press_color, out fontPressColor);
+            ColorUtility.TryParseHtmlString(KeyboardKeyModel.font_lock_color, out fontLockColor);
         }
 
         private void SetText()
         {
-            keyText.text = KeyboardManager.Instance.Shifted || KeyboardManager.Instance.ShiftedLocked ? keyboardKeyLevelModel.shifted : keyboardKeyLevelModel.normal;
+            string text = KeyboardManager.Instance.Shifted || KeyboardManager.Instance.ShiftedLocked ? KeyboardKeyModel.shifted : KeyboardKeyModel.normal;
+
+            if (!string.IsNullOrEmpty(text) && !keyText.font.HasCharacters(text, out uint[] missing, false, true))
+            {
+                SystemUtil.Log(GetType(), $"Character not found in TMP Font Asset: {keyText.font.name} => {text} => missing: {JsonConvert.SerializeObject(missing)}");
+
+                text = "";
+            }
+            
+            keyText.text = text;
             keyText.color = fontReleaseColor;
         }
 
-        public KeyboardKey Setup(KeyboardKeyLevelModel keyboardKeyLevelModel)
+        public KeyboardKey Setup(KeyboardKeyModel KeyboardKeyModel)
         {
-            this.keyboardKeyLevelModel = keyboardKeyLevelModel;
+            this.KeyboardKeyModel = KeyboardKeyModel;
 
             name = "KEYBOARDMANAGER_KEY";
 
@@ -260,38 +270,38 @@ namespace Assets._Scripts.Manager.Keyboard.Key
 
             press = false;
 
-            if (time <= keyboardKeyLevelModel.click_time)
+            if (time <= KeyboardKeyModel.click_time)
             {
-                if (keyboardKeyLevelModel.shift && shitClicks >= 2)
+                if (KeyboardKeyModel.shift && shitClicks >= 2)
                 {
                     KeyboardManager.Instance.KeyClick(KeyboardManager.Key.ShiftLock);
 
                     shiftTime = 0;
                     shitClicks = 0;
                 }
-                else if (keyboardKeyLevelModel.shift)
+                else if (KeyboardKeyModel.shift)
                 {
                     KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Shift);
                 }
-                else if (keyboardKeyLevelModel.delete)
+                else if (KeyboardKeyModel.delete)
                 {
                     KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Delete);
                 }
-                else if (keyboardKeyLevelModel.tab)
+                else if (KeyboardKeyModel.tab)
                 {
                     KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Tab);
                 }
-                else if (keyboardKeyLevelModel.swap)
+                else if (KeyboardKeyModel.swap)
                 {
-                    KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Swap, null, keyboardKeyLevelModel.level);
+                    KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Swap, null, KeyboardKeyModel.level);
                 }
-                else if (keyboardKeyLevelModel.enter)
+                else if (KeyboardKeyModel.enter)
                 {
                     KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Enter);
                 }
                 else
                 {
-                    KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Text, Key);
+                    KeyboardManager.Instance.KeyClick(KeyboardManager.Key.Text, Key, null, KeyboardKeyModel);
                 }
             }
             else if (holdKey != null)

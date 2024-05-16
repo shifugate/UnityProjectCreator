@@ -11,6 +11,7 @@ namespace UnityProjectCreator
     {
         private bool running;
         private bool useKeyboard;
+        private bool useTmeout;
 
         private string? projectName;
 
@@ -38,12 +39,15 @@ namespace UnityProjectCreator
         {
             FileUtil.CopyDirectory("_Template/Packages", $"{projectName}/Packages", true);
             FileUtil.CopyDirectory("_Template/ProjectSettings", $"{projectName}/ProjectSettings", true);
+            FileUtil.CopyDirectory("_Template/__OFF", $"{projectName}/__OFF", true);
             FileUtil.CopyDirectory("_Template/Assets/_Addressables", $"{projectName}/Assets/_Addressables", true);
             FileUtil.CopyDirectory("_Template/Assets/_BuiltIn", $"{projectName}/Assets/_BuiltIn", true);
             FileUtil.CopyDirectory("_Template/Assets/_External", $"{projectName}/Assets/_External", true);
             FileUtil.CopyDirectory("_Template/Assets/AddressableAssetsData", $"{projectName}/Assets/AddressableAssetsData", true);
             FileUtil.CopyDirectory("_Template/Assets/TextMesh Pro", $"{projectName}/Assets/TextMesh Pro", true);
             FileUtil.CopyDirectory("_Template/Assets/Resources/Manager/Popup", $"{projectName}/Assets/Resources/Manager/Popup", true);
+            FileUtil.CopyDirectory("_Template/Assets/Resources/Manager/Keyboard", $"{projectName}/Assets/Resources/Manager/Keyboard", true);
+            FileUtil.CopyDirectory("_Template/Assets/Resources/Fonts & Materials", $"{projectName}/Assets/Resources/Fonts & Materials", true);
             FileUtil.CopyDirectory("_Template/Assets/_Scripts", $"{projectName}/Assets/_Scripts", true);
 
             if (!useKeyboard)
@@ -57,7 +61,7 @@ namespace UnityProjectCreator
                 File.WriteAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs", initializeManager);
             }
 
-            if (!useKeyboard)
+            if (!useTmeout)
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Timeout", true);
 
@@ -99,6 +103,7 @@ namespace UnityProjectCreator
             running = true;
 
             useKeyboard = KeyboardManagerCkb.IsChecked != null && (bool)KeyboardManagerCkb.IsChecked;
+            useTmeout = TimeoutManagerCkb.IsChecked != null && (bool)TimeoutManagerCkb.IsChecked;
             projectName = ProjectTbk.Text;
 
             bool complete = false;
