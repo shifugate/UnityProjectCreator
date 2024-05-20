@@ -1,0 +1,365 @@
+<keyboards hide="true" keytimer="500">
+	<backgrounds>
+		<background type="0" background="background_normal.png"></background>
+	</backgrounds>
+	<images>
+		<image type="0" keyup="key_0_g.png" keydown="key_0_d_g.png" keyselected="key_0_d_g.png"></image>
+		<image type="1" keyup="key_backspace_g.png" keydown="key_backspace_d_g.png" keyselected="key_backspace_d_g.png"></image>
+		<image type="2" keyup="key_1.png" keydown="key_1_d.png" keyselected="key_1_d.png"></image>
+		<image type="3" keyup="key_shift_g.png" keydown="key_shift_d_g.png" keyselected="key_shift_s_g.png"></image>
+		<image type="4" keyup="key_enter_g.png" keydown="key_enter_d_g.png" keyselected="key_enter_d_g.png"></image>
+		<image type="5" keyup="key_swap_g.png" keydown="key_swap_d_g.png" keyselected="key_swap_d_g.png"></image>
+		<image type="6" keyup="key_space_g.png" keydown="key_space_d_g.png" keyselected="key_space_d_g.png"></image>
+		<image type="7" keyup="key_space_lite_g.png" keydown="key_space_lite_d_g.png" keyselected="key_space_lite_d_g.png"></image>
+		<image type="8" keyup="key_backspace_2_g.png" keydown="key_backspace_2_d_g.png" keyselected="key_backspace_2_d_g.png"></image>
+		<image type="9" keyup="key_enter_2_g.png" keydown="key_enter_2_d_g.png" keyselected="key_enter_2_d_g.png"></image>
+	</images>
+	<keyboard type="NORMAL" space="10" subdistance="0" image="0" background="0" xposin="990" xposout="990" yposin="-650" yposout="-2320" scale="1.5" alphain="" alphaout="" time="" fontsize="20" fontcolor="10,27,53" fontcolorover="138,187,226">
+		<level level="0">
+			<line>
+				<key text="q"></key>
+				<key text="w"></key>
+				<key text="e">
+					<subkey text="é" space="2"></subkey>
+					<subkey text="è" space="2"></subkey>
+					<subkey text="ë" space="2"></subkey>
+					<subkey text="ê" space="2"></subkey>
+				</key>
+				<key text="r"></key>
+				<key text="t"></key>
+				<key text="y"></key>
+				<key text="u">
+					<subkey text="ú" space="2"></subkey>
+					<subkey text="ù" space="2"></subkey>
+					<subkey text="ü" space="2"></subkey>
+				</key>
+				<key text="i">
+					<subkey text="í" space="2"></subkey>
+					<subkey text="ï" space="2"></subkey>
+					<subkey text="ì" space="2"></subkey>
+				</key>
+				<key text="o">
+					<subkey text="ó" space="2"></subkey>
+					<subkey text="ò" space="2"></subkey>
+					<subkey text="ö" space="2"></subkey>
+					<subkey text="ô" space="2"></subkey>
+					<subkey text="õ" space="2"></subkey>
+				</key>
+				<key text="p"></key>
+			</line>
+			<line>
+				<key text="a">
+					<subkey text="á" space="2"></subkey>
+					<subkey text="à" space="2"></subkey>
+					<subkey text="ä" space="2"></subkey>
+					<subkey text="ã" space="2"></subkey>
+				</key>
+				<key text="s"></key>
+				<key text="d"></key>
+				<key text="f"></key>
+				<key text="g"></key>
+				<key text="h"></key>
+				<key text="j"></key>
+				<key text="k"></key>
+				<key text="l"></key>
+			</line>
+			<line>
+				<key type="SHIFT" image="3"></key>
+				<key text="z"></key>
+				<key text="x"></key>
+				<key text="c">
+					<subkey text="ç" space="2"></subkey>
+				</key>
+				<key text="v"></key>
+				<key text="b"></key>
+				<key text="n"></key>
+				<key text="m"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="?123" type="SWAP" level="1" image="5"></key>
+				<key text=","></key>
+				<key text=" " image="6"></key>
+				<key text="."></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+		<level level="1">
+			<line>
+				<key text="1"></key>
+				<key text="2"></key>
+				<key text="3"></key>
+				<key text="4"></key>
+				<key text="5"></key>
+				<key text="6"></key>
+				<key text="7"></key>
+				<key text="8"></key>
+				<key text="9"></key>
+				<key text="0"></key>
+			</line>
+			<line>
+				<key text="@"></key>
+				<key text="#"></key>
+				<key text="$"></key>
+				<key text="_"></key>
+				<key text="&amp;"></key>
+				<key text="-"></key>
+				<key text="+"></key>
+				<key text="("></key>
+				<key text=")"></key>
+				<key text="/"></key>
+			</line>
+			<line>
+				<key text="=\&lt;" type="SWAP" level="2" image="5"></key>
+				<key text="*"></key>
+				<key text='"'></key>
+				<key text="'"></key>
+				<key text=":"></key>
+				<key text=";"></key>
+				<key text="!"></key>
+				<key text="?"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="ABC" type="SWAP" level="0" image="5"></key>
+				<key text=","></key>
+				<key text=" " image="6"></key>
+				<key text="."></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+		<level level="2">
+			<line>
+				<key text="~"></key>
+				<key text="`"></key>
+				<key text="|"></key>
+				<key text="•"></key>
+				<key text="√"></key>
+				<key text="π"></key>
+				<key text="÷"></key>
+				<key text="X"></key>
+				<key text="¶"></key>
+				<key text="Δ"></key>
+			</line>
+			<line>
+				<key text="£"></key>
+				<key text="¢"></key>
+				<key text="€"></key>
+				<key text="¥"></key>
+				<key text="^"></key>
+				<key text="°"></key>
+				<key text="="></key>
+				<key text="{"></key>
+				<key text="}"></key>
+				<key text="\"></key>
+			</line>
+			<line>
+				<key text="?123" type="SWAP" level="1" image="5"></key>
+				<key text="%"></key>
+				<key text="©"></key>
+				<key text="®"></key>
+				<key text="™"></key>
+				<key text="✓"></key>
+				<key text="["></key>
+				<key text="]"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="ABC" type="SWAP" level="0" image="5"></key>
+				<key text="&lt;"></key>
+				<key text=" " image="6"></key>
+				<key text="&gt;"></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+	</keyboard>
+	<keyboard type="EMAIL" space="10" image="0" background="0" xposin="990" xposout="990" yposin="-650" yposout="-2320" scale="1.5" fontcolor="10,27,53" fontcolorover="138,187,226">
+		<level level="0">
+			<line>
+				<key text="q"></key>
+				<key text="w"></key>
+				<key text="e">
+					<subkey text="é" space="2"></subkey>
+					<subkey text="è" space="2"></subkey>
+					<subkey text="ë" space="2"></subkey>
+					<subkey text="ê" space="2"></subkey>
+				</key>
+				<key text="r"></key>
+				<key text="t"></key>
+				<key text="y"></key>
+				<key text="u">
+					<subkey text="ú" space="2"></subkey>
+					<subkey text="ù" space="2"></subkey>
+					<subkey text="ü" space="2"></subkey>
+				</key>
+				<key text="i">
+					<subkey text="í" space="2"></subkey>
+					<subkey text="ï" space="2"></subkey>
+					<subkey text="ì" space="2"></subkey>
+				</key>
+				<key text="o">
+					<subkey text="ó" space="2"></subkey>
+					<subkey text="ò" space="2"></subkey>
+					<subkey text="ö" space="2"></subkey>
+					<subkey text="ô" space="2"></subkey>
+					<subkey text="õ" space="2"></subkey>
+				</key>
+				<key text="p"></key>
+			</line>
+			<line>
+				<key text="a">
+					<subkey text="á" space="2"></subkey>
+					<subkey text="à" space="2"></subkey>
+					<subkey text="ä" space="2"></subkey>
+					<subkey text="ã" space="2"></subkey>
+				</key>
+				<key text="s"></key>
+				<key text="d"></key>
+				<key text="f"></key>
+				<key text="g"></key>
+				<key text="h"></key>
+				<key text="j"></key>
+				<key text="k"></key>
+				<key text="l"></key>
+			</line>
+			<line>
+				<key type="SHIFT" image="3"></key>
+				<key text="z"></key>
+				<key text="x"></key>
+				<key text="c">
+					<subkey text="ç" space="2"></subkey>
+				</key>
+				<key text="v"></key>
+				<key text="b"></key>
+				<key text="n"></key>
+				<key text="m"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="?123" type="SWAP" level="1" image="5"></key>
+				<key text="@"></key>
+				<key text="@gmail.com" image="7" notshift="true"></key>
+				<key text=".com" notshift="true"></key>
+				<key text=".com.pt" image="5" notshift="true"></key>
+				<key text="."></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+		<level level="1">
+			<line>
+				<key text="1"></key>
+				<key text="2"></key>
+				<key text="3"></key>
+				<key text="4"></key>
+				<key text="5"></key>
+				<key text="6"></key>
+				<key text="7"></key>
+				<key text="8"></key>
+				<key text="9"></key>
+				<key text="0"></key>
+			</line>
+			<line>
+				<key text="@"></key>
+				<key text="#"></key>
+				<key text="$"></key>
+				<key text="_"></key>
+				<key text="&amp;"></key>
+				<key text="-"></key>
+				<key text="+"></key>
+				<key text="("></key>
+				<key text=")"></key>
+				<key text="/"></key>
+			</line>
+			<line>
+				<key text="=\&lt;" type="SWAP" level="2" image="5"></key>
+				<key text="*"></key>
+				<key text='"'></key>
+				<key text="'"></key>
+				<key text=":"></key>
+				<key text=";"></key>
+				<key text="!"></key>
+				<key text="?"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="ABC" type="SWAP" level="0" image="5"></key>
+				<key text=","></key>
+				<key text="@gmail.com" image="7" notshift="true"></key>
+				<key text=".com" notshift="true"></key>
+				<key text=".com.br" image="5" notshift="true"></key>
+				<key text="."></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+		<level level="2">
+			<line>
+				<key text="~"></key>
+				<key text="`"></key>
+				<key text="|"></key>
+				<key text="•"></key>
+				<key text="√"></key>
+				<key text="π"></key>
+				<key text="÷"></key>
+				<key text="X"></key>
+				<key text="¶"></key>
+				<key text="Δ"></key>
+			</line>
+			<line>
+				<key text="£"></key>
+				<key text="¢"></key>
+				<key text="€"></key>
+				<key text="¥"></key>
+				<key text="^"></key>
+				<key text="°"></key>
+				<key text="="></key>
+				<key text="{"></key>
+				<key text="}"></key>
+				<key text="\"></key>
+			</line>
+			<line>
+				<key text="?123" type="SWAP" level="1" image="5"></key>
+				<key text="%"></key>
+				<key text="©"></key>
+				<key text="®"></key>
+				<key text="™"></key>
+				<key text="✓"></key>
+				<key text="["></key>
+				<key text="]"></key>
+				<key type="BACKSPACE" image="1"></key>
+			</line>
+			<line>
+				<key text="ABC" type="SWAP" level="0" image="5"></key>
+				<key text="&lt;"></key>
+				<key text="@gmail.com" image="7" notshift="true"></key>
+				<key text=".com" notshift="true"></key>
+				<key text=".com.br" image="5" notshift="true"></key>
+				<key text="&gt;"></key>
+				<key type="ENTER" image="4"></key>
+			</line>
+		</level>
+	</keyboard>
+	<keyboard type="NUMERIC" space="10" image="0" background="0" xposin="990" xposout="990" yposin="-650" yposout="-2320" scale="1.5" fontcolor="10,27,53" fontcolorover="138,187,226">
+		<level level="0">
+			<line>
+				<key text="1"></key>
+				<key text="2"></key>
+				<key text="3"></key>
+			</line>
+			<line>
+				<key text="4"></key>
+				<key text="5"></key>
+				<key text="6"></key>
+			</line>
+			<line>
+				<key text="7"></key>
+				<key text="8"></key>
+				<key text="9"></key>
+			</line>
+			<line>
+				<key type="BACKSPACE" image="8"></key>
+				<key text="0"></key>
+				<key type="ENTER" image="9"></key>
+			</line>
+		</level>
+	</keyboard>
+</keyboards>

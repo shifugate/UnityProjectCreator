@@ -1,0 +1,15 @@
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\OldKeyboardToJson.exe
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\config.xml
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\OldKeyboardToJson.deps.json
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\OldKeyboardToJson.runtimeconfig.json
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\OldKeyboardToJson.dll
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\bin\Debug\net6.0\OldKeyboardToJson.pdb
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.AssemblyInfoInputs.cache
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.AssemblyInfo.cs
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.csproj.CoreCompileInputs.cache
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.dll
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\refint\OldKeyboardToJson.dll
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.pdb
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\OldKeyboardToJson.genruntimeconfig.cache
+C:\Users\mauricio.ferreira\Documents\OldKeyboardToJson\OldKeyboardToJson\obj\Debug\net6.0\ref\OldKeyboardToJson.dll
