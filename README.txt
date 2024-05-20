@@ -1,0 +1,1 @@
+Copy _Templeta folder to release or bin folder.

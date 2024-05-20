@@ -54,6 +54,9 @@ namespace UnityProjectCreator
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard", true);
 
+                if (File.Exists($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta"))
+                    File.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta");
+
                 string initializeManager = File.ReadAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs");
                 initializeManager = initializeManager.Replace("\r\nusing Assets._Scripts.Manager.Keyboard;", "");
                 initializeManager = initializeManager.Replace("\r\n            KeyboardManager.InstanceNW(this);", "");
@@ -64,6 +67,9 @@ namespace UnityProjectCreator
             if (!useTmeout)
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Timeout", true);
+
+                if (File.Exists($"{projectName}/Assets/_Scripts/Manager/Timeout.meta"))
+                    File.Delete($"{projectName}/Assets/_Scripts/Manager/Timeout.meta");
 
                 string initializeManager = File.ReadAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs");
                 initializeManager = initializeManager.Replace("\r\nusing Assets._Scripts.Manager.Timeout;", "");
