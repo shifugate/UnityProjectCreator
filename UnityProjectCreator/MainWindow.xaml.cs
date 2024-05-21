@@ -53,6 +53,7 @@ namespace UnityProjectCreator
             if (!useKeyboard)
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard", true);
+                Directory.Delete($"{projectName}/Assets/Resources/Manager/Keyboard", true);
 
                 if (File.Exists($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta"))
                     File.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta");

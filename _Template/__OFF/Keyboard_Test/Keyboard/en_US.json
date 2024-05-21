@@ -1,0 +1,43 @@
+{
+	"font_release_color": "#0A1B35",
+	"font_press_color": "#FFFFFF",
+	"font_release_hold_color": "#0A1B35",
+	"font_press_hold_color": "#FFFFFF",
+	"font_lock_color": "#FFFFFF",
+	"release_key": 
+	{ 
+		"file": "release_key.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"press_key": 
+	{
+		"file": "press_key.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"release_hold_key": 
+	{ 
+		"file": "release_hold_key.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"press_hold_key": 
+	{
+		"file": "press_hold_key.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"background": 
+	{
+		"file": "normal_bg.png",
+		"margin": [10, 10, 10, 10]
+	},
+	"width_key": 100,
+	"height_key": 100,
+	"space_row": 20,
+	"space_key": 20,
+	"margin_x": 20,
+	"margin_y": 20,
+	"start_at": 3,
+	"show_at": 3,
+	"show_margin": 50,
+	"click_time": 0.25,
+	"keyboards": [0, 1]
+}
