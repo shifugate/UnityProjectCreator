@@ -39,7 +39,6 @@ namespace UnityProjectCreator
         {
             FileUtil.CopyDirectory("_Template/Packages", $"{projectName}/Packages", true);
             FileUtil.CopyDirectory("_Template/ProjectSettings", $"{projectName}/ProjectSettings", true);
-            FileUtil.CopyDirectory("_Template/__OFF", $"{projectName}/__OFF", true);
             FileUtil.CopyDirectory("_Template/Assets/_Addressables", $"{projectName}/Assets/_Addressables", true);
             FileUtil.CopyDirectory("_Template/Assets/_BuiltIn", $"{projectName}/Assets/_BuiltIn", true);
             FileUtil.CopyDirectory("_Template/Assets/_External", $"{projectName}/Assets/_External", true);
