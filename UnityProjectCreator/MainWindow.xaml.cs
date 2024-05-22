@@ -52,10 +52,14 @@ namespace UnityProjectCreator
             if (!useKeyboard)
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard", true);
-                Directory.Delete($"{projectName}/Assets/Resources/Manager/Keyboard", true);
 
                 if (File.Exists($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta"))
                     File.Delete($"{projectName}/Assets/_Scripts/Manager/Keyboard.meta");
+
+                Directory.Delete($"{projectName}/Assets/Resources/Manager/Keyboard", true);
+
+                if (File.Exists($"{projectName}/Assets/Resources/Manager/Keyboard.meta"))
+                    File.Delete($"{projectName}/Assets/Resources/Manager/Keyboard.meta");
 
                 string initializeManager = File.ReadAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs");
                 initializeManager = initializeManager.Replace("\r\nusing Assets._Scripts.Manager.Keyboard;", "");
