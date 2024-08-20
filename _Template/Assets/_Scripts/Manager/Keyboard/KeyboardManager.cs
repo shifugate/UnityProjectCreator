@@ -219,6 +219,9 @@ namespace Assets._Scripts.Manager.Keyboard
 
                 yield return null;
             }
+
+            foreach (KeyboardBoard keyboard in keyboardBoards)
+                keyboard.Hide();
         }
 
         private void SetProperties()
@@ -671,9 +674,6 @@ namespace Assets._Scripts.Manager.Keyboard
 
             keyboardDatas.RemoveAll(data => data?.inputField == null);
             keyboardDatas.RemoveAll(data => data.inputField == inputField);
-
-            if (keyboardDatas.Count == 0)
-                return;
 
             focusCR = StartCoroutine(FocusCR());
         }
