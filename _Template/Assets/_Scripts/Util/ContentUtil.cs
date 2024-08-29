@@ -86,24 +86,23 @@ namespace Assets._Scripts.Util
 
         public static async Task<T> LoadContent<T>(string file)
         {
-            GameObject go = await Addressables.LoadAssetAsync<GameObject>($"Assets/_Addressables/{file}").Task;
-            go.name = typeof(T).Name;
+            T content = await Addressables.LoadAssetAsync<T>($"Assets/_Addressables/{file}").Task;
 
             if (typeof(T).Equals(typeof(GameObject)))
-                return (T)Convert.ChangeType(go, typeof(T));
+                return (T)Convert.ChangeType(content, typeof(T));
 
-            return go.GetComponent<T>();
+            return content;
         }
 
         public static IEnumerator LoadContent<T>(string file, Action<T> completeCallback, Action failCallback, Action<float> progressionCallback = null)
         {
-            AsyncOperationHandle<GameObject> handle = default(AsyncOperationHandle<GameObject>);
+            AsyncOperationHandle<T> handle = default(AsyncOperationHandle<T>);
 
             Exception error = null;
 
             try
             {
-                handle = Addressables.LoadAssetAsync<GameObject>($"Assets/_Addressables/{file}");
+                handle = Addressables.LoadAssetAsync<T>($"Assets/_Addressables/{file}");
             }
             catch (Exception ex)
             {
@@ -135,16 +134,7 @@ namespace Assets._Scripts.Util
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                handle.Result.name = typeof(T).Name;
-
-                if (typeof(T).Equals(typeof(GameObject)))
-                {
-                    completeCallback?.Invoke((T)Convert.ChangeType(handle.Result, typeof(T)));
-
-                    yield break;
-                }
-
-                completeCallback?.Invoke(handle.Result.GetComponent<T>());
+                completeCallback?.Invoke(handle.Result);
 
                 yield break;
             }
