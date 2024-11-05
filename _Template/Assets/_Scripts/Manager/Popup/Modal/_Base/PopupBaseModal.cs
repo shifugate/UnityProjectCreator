@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Assets._Scripts.Util;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,12 +10,54 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
 
     public class PopupBaseModal : MonoBehaviour
     {
+        protected CanvasGroup canvasGroup;
+        public CanvasGroup CanvasGroup { get { return canvasGroup; } }
+
+        public GameObject firstSelected;
+
         public PopupBaseModalShow popupBaseModalShow = new PopupBaseModalShow();
         public PopupBaseModalHide popupBaseModalHide = new PopupBaseModalHide();
 
         private bool showing;
+        private bool interactive;
 
-        virtual protected void Awake()
+        private GameObject lastSelected;
+
+        virtual protected void Update()
+        {
+            if (!canvasGroup.interactable)
+            {
+                interactive = false;
+
+                return;
+            }
+
+            if (!interactive && canvasGroup.interactable)
+            {
+                interactive = true;
+
+                if (lastSelected != null && EventUtil.CurrentSelected != null && EventUtil.CurrentSelected != lastSelected)
+                    EventUtil.Selected(lastSelected);
+            }
+
+            lastSelected = EventUtil.CurrentSelected;
+        }
+
+        virtual public void Initialize()
+        {
+            SetCanvasGroup();
+            SetScale();
+        }
+
+        virtual public void SetCanvasGroup()
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+
+            if (canvasGroup == null)
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        virtual public void SetScale()
         {
             transform.localScale = Vector3.zero;
         }
@@ -30,13 +73,15 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
             showing = true;
 
             ShowAction();
+
+            EventUtil.Selected(firstSelected);
         }
 
         virtual public void ShowAction()
         {
             transform.DOKill();
             transform.DOScale(1, 0.25f)
-                .SetDelay(0.25f);
+                .SetUpdate(true);
         }
 
         public void Hide()
@@ -58,7 +103,8 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
                     popupBaseModalHide?.Invoke(this);
 
                     Destroy(gameObject);
-                });
+                })
+                .SetUpdate(true);
         }
     }
 }

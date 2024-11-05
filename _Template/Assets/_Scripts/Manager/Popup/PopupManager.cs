@@ -3,6 +3,7 @@ using Assets._Scripts.Manager.Popup.Modal.Base;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets._Scripts.Util;
 
 namespace Assets._Scripts.Manager.Popup
 {
@@ -50,9 +51,10 @@ namespace Assets._Scripts.Manager.Popup
 
             overlayCanvasGroup.blocksRaycasts = block;
 
-            PopupBaseModal modal = GameObject.Instantiate<PopupBaseModal>(Resources.Load<PopupBaseModal>($"Manager/Popup/Modal/{typeof(T).Name}"), popupHolder);
+            PopupBaseModal modal = Instantiate(Resources.Load<PopupBaseModal>($"Manager/Popup/Modal/{typeof(T).Name}"), popupHolder);
             modal.popupBaseModalShow.AddListener(AddModal);
             modal.popupBaseModalHide.AddListener(RemoveModal);
+            modal.Initialize();
             modal.Show();
 
             return (T)Convert.ChangeType(modal, typeof(T));
@@ -117,6 +119,9 @@ namespace Assets._Scripts.Manager.Popup
             if (modals.Count == 0)
                 Show();
 
+            if (modals.Count > 0)
+                modals[modals.Count - 1].CanvasGroup.interactable = false;
+
             modals.Add(modal);
         }
 
@@ -126,13 +131,21 @@ namespace Assets._Scripts.Manager.Popup
 
             if (modals.Count == 0)
                 Hide();
+            else
+                modals[modals.Count - 1].CanvasGroup.interactable = true;
         }
 
         private void Show()
         {
             overlayCanvasGroup.DOKill();
             overlayCanvasGroup.DOFade(overlay ? 1 : 0, 0.25f)
-                .OnStart(() => gameObject.SetActive(true));
+                .OnStart(() =>
+                {
+                    SystemUtil.PauseGame();
+
+                    gameObject.SetActive(true);
+                })
+                .SetUpdate(true);
         }
 
         private void Hide()
@@ -140,7 +153,13 @@ namespace Assets._Scripts.Manager.Popup
             overlayCanvasGroup.DOKill();
             overlayCanvasGroup.DOFade(0, 0.25f)
                 .SetDelay(0.25f)
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() =>
+                {
+                    SystemUtil.ResumeGame();
+
+                    gameObject.SetActive(false);
+                })
+                .SetUpdate(true);
         }
     }
 }

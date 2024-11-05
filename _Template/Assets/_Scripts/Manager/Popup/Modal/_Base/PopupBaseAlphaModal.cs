@@ -1,16 +1,13 @@
 ﻿using DG.Tweening;
-using UnityEngine;
 
 namespace Assets._Scripts.Manager.Popup.Modal.Base
 {
     public class PopupBaseAlphaModal : PopupBaseModal
     {
-        [SerializeField]
-        private CanvasGroup canvasGroup;
-
-        override protected void Awake()
+        override public void Initialize()
         {
-            canvasGroup = GetComponent<CanvasGroup>();
+            SetCanvasGroup();
+
             canvasGroup.alpha = 0;       
         }
 
@@ -18,7 +15,7 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
         {
             canvasGroup.DOKill();
             canvasGroup.DOFade(1, 0.25f)
-                .SetDelay(0.25f);
+                .SetUpdate(true);
         }
 
         override public void HideAction()
@@ -29,7 +26,8 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
                     popupBaseModalHide?.Invoke(this);
 
                     Destroy(gameObject);
-                });
+                })
+                .SetUpdate(true);
         }
     }
 }

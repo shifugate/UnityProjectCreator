@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets._Scripts.Util
@@ -35,6 +36,39 @@ namespace Assets._Scripts.Util
                 Debug.LogError($"{type.Name}: {ex}");
             else
                 Debug.Log($"{type.Name}: {ex}");
+        }
+
+        public static void QuitApplication()
+        {
+#if !UNITY_EDITOR
+            Application.Quit();
+#else
+            EditorApplication.isPlaying = false;
+#endif
+        }
+
+        public static void PauseGame()
+        {
+            Time.timeScale = 0;
+            AudioListener.pause = true;
+        }
+
+        public static void ResumeGame()
+        {
+            Time.timeScale = 1;
+            AudioListener.pause = false;
+        }
+
+        public static void ShowCursor()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+
+        public static void HideCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }
