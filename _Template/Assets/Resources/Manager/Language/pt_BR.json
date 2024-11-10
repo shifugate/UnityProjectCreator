@@ -1,0 +1,13 @@
+{
+	"common": 
+	{
+		"error_token": "Erro",
+		"accept_token": "Aceitar",
+		"close_token": "Fechar",
+	},
+	"splash": 
+	{
+		"message_0": "TEST 0 BR",
+		"message_1": "TEST 1 BR",
+	},
+}
