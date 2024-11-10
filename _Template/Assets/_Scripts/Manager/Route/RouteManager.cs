@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Assets._Scripts.Manager.Route.Transition.Base;
 using Assets._Scripts.MC.__Base;
 using Assets._Scripts.Util;
+using System.Linq;
 
 namespace Assets._Scripts.Manager.Route
 {
@@ -32,7 +33,10 @@ namespace Assets._Scripts.Manager.Route
         public enum Routes
         {
             SplashScene,
-            HomeScene
+            MenuScene,
+            LoadScene,
+            GameScene,
+            EndScene,
         }
 
         private static bool loading;
@@ -58,6 +62,13 @@ namespace Assets._Scripts.Manager.Route
 
         private void SetProperties()
         {
+            if (!Enum.GetNames(typeof(Routes)).Contains(SceneManager.GetActiveScene().name))
+            {
+                initialized = true;
+
+                return;
+            }
+
             LoadScene(Routes.SplashScene);
         }
 

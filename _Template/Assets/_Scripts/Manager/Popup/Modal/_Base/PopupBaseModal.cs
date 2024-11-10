@@ -36,7 +36,7 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
             {
                 interactive = true;
 
-                if (lastSelected != null && EventUtil.CurrentSelected != null && EventUtil.CurrentSelected != lastSelected)
+                if (lastSelected != null)
                     EventUtil.Selected(lastSelected);
             }
 
