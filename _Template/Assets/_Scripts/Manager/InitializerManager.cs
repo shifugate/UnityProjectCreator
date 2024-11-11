@@ -8,7 +8,6 @@ using Assets._Scripts.Manager.System;
 using Assets._Scripts.Manager.Keyboard;
 using Assets._Scripts.Manager.Timeout;
 using Assets._Scripts.Manager.Popup;
-using Assets._Scripts.Manager.Event;
 
 namespace Assets._Scripts.Manager
 {
@@ -68,7 +67,6 @@ namespace Assets._Scripts.Manager
             SystemManager.InstanceNW(this);
             KeyboardManager.InstanceNW(this);
             TimeoutManager.InstanceNW(this);
-            EventManager.InstanceNW(this);
         }
 
         private IEnumerator InitializeCR()
