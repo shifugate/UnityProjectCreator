@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Assets._Scripts.Manager.Route.Transition.Base;
+using Assets._Scripts.MC.__Base;
+using Assets._Scripts.Util;
+using System;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using Assets._Scripts.Manager.Route.Transition.Base;
-using Assets._Scripts.MC.__Base;
-using Assets._Scripts.Util;
-using System.Linq;
 
 namespace Assets._Scripts.Manager.Route
 {
@@ -21,7 +21,7 @@ namespace Assets._Scripts.Manager.Route
         {
             if (instance == null)
             {
-                GameObject go = new GameObject("RouteManager");
+                GameObject go = new("RouteManager");
 
                 instance = go.AddComponent<RouteManager>();
             }
@@ -33,10 +33,7 @@ namespace Assets._Scripts.Manager.Route
         public enum Routes
         {
             SplashScene,
-            MenuScene,
-            LoadScene,
-            GameScene,
-            EndScene,
+            HomeScene,
         }
 
         private static bool loading;
@@ -106,11 +103,11 @@ namespace Assets._Scripts.Manager.Route
         {
             bool complete = false;
 
-            SceneInstance scene = default(SceneInstance);
+            SceneInstance scene = default;
 
             float progression = 0;
 
-            StartCoroutine(LoadSceneAsyncCR(route, (SceneInstance result) => 
+            StartCoroutine(LoadSceneAsyncCR(route, (SceneInstance result) =>
             {
                 complete = true;
                 scene = result;
@@ -138,7 +135,7 @@ namespace Assets._Scripts.Manager.Route
 
         private IEnumerator LoadSceneAsyncCR(string route, Action<SceneInstance> completeCallback, Action failCallback, Action<float> progressionCallback)
         {
-            SceneInstance loadedScene = default(SceneInstance);
+            SceneInstance loadedScene = default;
 
             yield return ContentUtil.LoadScene($"{route}.unity", (SceneInstance scene) => loadedScene = scene, failCallback, progressionCallback, true);
             yield return loadedScene.ActivateAsync();

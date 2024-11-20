@@ -8,7 +8,7 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
         {
             SetCanvasGroup();
 
-            canvasGroup.alpha = 0;       
+            canvasGroup.alpha = 0;
         }
 
         override public void ShowAction()
@@ -22,7 +22,8 @@ namespace Assets._Scripts.Manager.Popup.Modal.Base
         {
             canvasGroup.DOKill();
             canvasGroup.DOFade(0, 0.25f)
-                .OnComplete(() => {
+                .OnComplete(() =>
+                {
                     popupBaseModalHide?.Invoke(this);
 
                     Destroy(gameObject);

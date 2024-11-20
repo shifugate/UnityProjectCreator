@@ -1,5 +1,5 @@
-﻿using Assets._Scripts.Manager.Route;
-using Assets._Scripts.Manager;
+﻿using Assets._Scripts.Manager;
+using Assets._Scripts.Manager.Route;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -33,12 +33,12 @@ namespace Assets._Scripts.Util
 
             }
 
-            return default(IList<T>);
+            return default;
         }
 
         public static IEnumerator LoadContents<T>(string key, Action<IList<T>> completeCallback, Action failCallback, Action<float> progressionCallback = null)
         {
-            AsyncOperationHandle<IList<T>> handle = default(AsyncOperationHandle<IList<T>>);
+            AsyncOperationHandle<IList<T>> handle = default;
 
             Exception error = null;
 
@@ -55,7 +55,7 @@ namespace Assets._Scripts.Util
 
             if (error != null)
             {
-                completeCallback?.Invoke(default(IList<T>));
+                completeCallback?.Invoke(default);
 
                 yield break;
             }
@@ -81,7 +81,7 @@ namespace Assets._Scripts.Util
                 yield break;
             }
 
-            completeCallback?.Invoke(default(IList<T>));
+            completeCallback?.Invoke(default);
         }
 
         public static async Task<T> LoadContent<T>(string file)
@@ -96,7 +96,7 @@ namespace Assets._Scripts.Util
 
         public static IEnumerator LoadContent<T>(string file, Action<T> completeCallback, Action failCallback, Action<float> progressionCallback = null)
         {
-            AsyncOperationHandle<T> handle = default(AsyncOperationHandle<T>);
+            AsyncOperationHandle<T> handle = default;
 
             Exception error = null;
 
@@ -113,7 +113,7 @@ namespace Assets._Scripts.Util
 
             if (error != null)
             {
-                completeCallback?.Invoke(default(T));
+                completeCallback?.Invoke(default);
 
                 yield break;
             }
@@ -139,7 +139,7 @@ namespace Assets._Scripts.Util
                 yield break;
             }
 
-            completeCallback?.Invoke(default(T));
+            completeCallback?.Invoke(default);
         }
 
         public static async Task<T> LoadContent<T>(string file, Transform parent)
@@ -150,7 +150,9 @@ namespace Assets._Scripts.Util
             if (typeof(T).Equals(typeof(GameObject)))
                 return (T)Convert.ChangeType(go, typeof(T));
 
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
             return go.GetComponent<T>();
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
         }
 
         public static IEnumerator LoadContent<T>(string file, Transform parent, Action<T> completeCallback, Action failCallback, Action<float> progressionCallback = null)
@@ -179,12 +181,14 @@ namespace Assets._Scripts.Util
                 if (typeof(T).Equals(typeof(GameObject)))
                     completeCallback?.Invoke((T)Convert.ChangeType(go, typeof(T)));
                 else
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
                     completeCallback?.Invoke(go.GetComponent<T>());
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
 
                 yield break;
             }
 
-            completeCallback?.Invoke(default(T));
+            completeCallback?.Invoke(default);
         }
 
         public static async Task<T> LoadContent<T>(string file, Vector3 position, Quaternion rotatation)
@@ -195,7 +199,9 @@ namespace Assets._Scripts.Util
             if (typeof(T).Equals(typeof(GameObject)))
                 return (T)Convert.ChangeType(go, typeof(T));
 
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
             return go.GetComponent<T>();
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
         }
 
         public static IEnumerator LoadContent<T>(string file, Vector3 position, Quaternion rotatation, Action<T> completeCallback, Action failCallback, Action<float> progressionCallback = null)
@@ -224,12 +230,14 @@ namespace Assets._Scripts.Util
                 if (typeof(T).Equals(typeof(GameObject)))
                     completeCallback?.Invoke((T)Convert.ChangeType(go, typeof(T)));
                 else
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
                     completeCallback?.Invoke(go.GetComponent<T>());
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
 
                 yield break;
             }
 
-            completeCallback?.Invoke(default(T));
+            completeCallback?.Invoke(default);
         }
 
         public static async Task<T> LoadContent<T>(string file, Vector3 position, Quaternion rotatation, Transform parent)
@@ -240,7 +248,9 @@ namespace Assets._Scripts.Util
             if (typeof(T).Equals(typeof(GameObject)))
                 return (T)Convert.ChangeType(go, typeof(T));
 
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
             return go.GetComponent<T>();
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
         }
 
         public static IEnumerator LoadContent<T>(string file, Vector3 position, Quaternion rotatation, Transform parent, Action<T> completeCallback, Action failCallback, Action<float> progressionCallback = null)
@@ -269,12 +279,14 @@ namespace Assets._Scripts.Util
                 if (typeof(T).Equals(typeof(GameObject)))
                     completeCallback?.Invoke((T)Convert.ChangeType(go, typeof(T)));
                 else
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
                     completeCallback?.Invoke(go.GetComponent<T>());
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
 
                 yield break;
             }
 
-            completeCallback?.Invoke(default(T));
+            completeCallback?.Invoke(default);
         }
 
         public static async Task<SceneInstance> LoadScene(string file, bool single = false)
@@ -352,7 +364,7 @@ namespace Assets._Scripts.Util
 
                 completeCallback?.Invoke(sprite);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SystemUtil.Log(ex, SystemUtil.LogType.Exception);
 
@@ -362,7 +374,7 @@ namespace Assets._Scripts.Util
 
         public static Texture2D RenderTextureToTexture2D(RenderTexture renderTexture)
         {
-            Texture2D texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+            Texture2D texture2D = new(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
 
             RenderTexture.active = renderTexture;
 
@@ -382,11 +394,11 @@ namespace Assets._Scripts.Util
 
             int height = Mathf.FloorToInt(renderTexture.height * scale);
 
-            Texture2D texture2D = new Texture2D(width, height, TextureFormat.RGB24, false);
+            Texture2D texture2D = new(width, height, TextureFormat.RGB24, false);
 
             RenderTexture.active = renderTexture;
 
-            texture2D.ReadPixels(new Rect(renderTexture.width / 2f - width / 2f, renderTexture.height / - height / 2f, width, height), 0, 0);
+            texture2D.ReadPixels(new Rect(renderTexture.width / 2f - width / 2f, renderTexture.height / -height / 2f, width, height), 0, 0);
             texture2D.Apply();
 
             RenderTexture.active = null;

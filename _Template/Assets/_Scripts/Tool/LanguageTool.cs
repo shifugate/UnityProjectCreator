@@ -27,7 +27,7 @@ namespace Assets._Scripts.Tool
 
             if (files != null)
             {
-                foreach (string file in files) 
+                foreach (string file in files)
                     contents.Add(Path.GetFileNameWithoutExtension(file), JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(File.ReadAllText(file)));
 
                 AssetDatabase.Refresh();

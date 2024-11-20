@@ -1,6 +1,6 @@
-﻿using TMPro;
+﻿using Assets._Scripts.Manager.Popup.Modal.Base;
+using TMPro;
 using UnityEngine;
-using Assets._Scripts.Manager.Popup.Modal.Base;
 
 namespace Assets._Scripts.Manager.Popup.Modal
 {

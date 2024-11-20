@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using Assets._Scripts.Manager.Language.Attributes;
 using Assets._Scripts.Manager.Language.Map;
 using Assets._Scripts.Manager.Language.Token;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Assets._Scripts.Manager.Language.Attributes;
 
 namespace Assets._Scripts.Manager.Language.Property
 {

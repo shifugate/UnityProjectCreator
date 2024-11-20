@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Assets._Scripts.Manager.Language.Event;
+using Assets._Scripts.Manager.Language.Map;
+using Assets._Scripts.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using Assets._Scripts.Manager.Language.Map;
-using Assets._Scripts.Util;
-using Assets._Scripts.Manager.Language.Event;
 
 namespace Assets._Scripts.Manager.Language
 {
@@ -20,7 +20,7 @@ namespace Assets._Scripts.Manager.Language
         {
             if (instance == null)
             {
-                GameObject go = new GameObject("LanguageManager");
+                GameObject go = new("LanguageManager");
 
                 instance = go.AddComponent<LanguageManager>();
             }
@@ -31,14 +31,14 @@ namespace Assets._Scripts.Manager.Language
 
         public enum CountryCode { en_US, pt_BR }
 
-        private Dictionary<string, Dictionary<string, Dictionary<string, string>>> contents = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
+        private readonly Dictionary<string, Dictionary<string, Dictionary<string, string>>> contents = new();
 
         private string language;
         public string Language { get { return language; } }
 
-        private List<LanguageManagerMap> maps = new List<LanguageManagerMap>();
+        private readonly List<LanguageManagerMap> maps = new();
 
-        private List<LanguageManagerExtendedMap> mapsExtended = new List<LanguageManagerExtendedMap>();
+        private readonly List<LanguageManagerExtendedMap> mapsExtended = new();
 
         private void Initialize(InitializerManager manager)
         {
@@ -126,32 +126,32 @@ namespace Assets._Scripts.Manager.Language
         }
 
         public Dictionary<string, string> GetGroup(string group)
-		{
-			try
-			{
-				return contents[language][group];
-			}
-			catch (Exception ex)
-			{
-				SystemUtil.Log(GetType(), $"{language}: {group} - {ex}", SystemUtil.LogType.Warning);
-			}
+        {
+            try
+            {
+                return contents[language][group];
+            }
+            catch (Exception ex)
+            {
+                SystemUtil.Log(GetType(), $"{language}: {group} - {ex}", SystemUtil.LogType.Warning);
+            }
 
-			return new Dictionary<string, string>();
-		}
+            return new Dictionary<string, string>();
+        }
 
-		public Dictionary<string, string> GetGroup(string language, string group)
-		{
-			try
-			{
-				return contents[language][group];
-			}
-			catch (Exception ex)
-			{
-				SystemUtil.Log(GetType(), $"{language}: {group} - {ex}", SystemUtil.LogType.Warning);
-			}
+        public Dictionary<string, string> GetGroup(string language, string group)
+        {
+            try
+            {
+                return contents[language][group];
+            }
+            catch (Exception ex)
+            {
+                SystemUtil.Log(GetType(), $"{language}: {group} - {ex}", SystemUtil.LogType.Warning);
+            }
 
-			return new Dictionary<string, string>();
-		}
+            return new Dictionary<string, string>();
+        }
 
         public void AddLanguageMap(LanguageManagerMap map)
         {
@@ -175,7 +175,7 @@ namespace Assets._Scripts.Manager.Language
                 return;
             }
 
-            foreach(LanguageManagerMap obj in maps)
+            foreach (LanguageManagerMap obj in maps)
                 SetMapTranslation(obj);
         }
 
@@ -189,11 +189,11 @@ namespace Assets._Scripts.Manager.Language
                 {
                     try
                     {
-                        component.GetType().GetProperty("text").SetValue(component, map.upper 
-                            ? GetTranslation(map.group, map.key).ToUpper() 
+                        component.GetType().GetProperty("text").SetValue(component, map.upper
+                            ? GetTranslation(map.group, map.key).ToUpper()
                             : GetTranslation(map.group, map.key));
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         SystemUtil.Log(GetType(), $"{language}: {component.gameObject.name}: {map.group}: {map.key} - {ex}", SystemUtil.LogType.Warning);
                     }
@@ -241,7 +241,7 @@ namespace Assets._Scripts.Manager.Language
                 {
                     try
                     {
-                        component.GetType().GetProperty("text").SetValue(component, map.upper 
+                        component.GetType().GetProperty("text").SetValue(component, map.upper
                             ? GetTranslation(map.language, map.group, map.key).ToUpper()
                             : GetTranslation(map.language, map.group, map.key));
                     }

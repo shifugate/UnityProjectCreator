@@ -19,12 +19,12 @@ namespace Assets._Scripts.Manager.Route.Transition.Base
 
         public virtual void AnimationIn(Action callback)
         {
-            
+
         }
 
         public virtual void AnimationOut(Action callback)
         {
-            
+
         }
 
         public virtual void Progression(float progression)

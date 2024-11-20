@@ -12,34 +12,34 @@ namespace Assets._Scripts.Util
                 || request.result == UnityWebRequest.Result.ProtocolError
                 || request.result == UnityWebRequest.Result.DataProcessingError;
         }
-		
-		public static void DisposeClient(HttpClient client)
-		{
-			try
-			{
-				if (client != null)
-					client.Dispose();
-			}
-			catch
-			{
-			}
-		}
 
-		public static string GetError(string data)
-		{
-			try
-			{
-				JObject json = JObject.Parse(data);
+        public static void DisposeClient(HttpClient client)
+        {
+            try
+            {
+                if (client != null)
+                    client.Dispose();
+            }
+            catch
+            {
+            }
+        }
 
-				if (json != null && json.ContainsKey("error"))
-					return json.Value<string>("error");
-			}
-			catch
-			{
+        public static string GetError(string data)
+        {
+            try
+            {
+                JObject json = JObject.Parse(data);
 
-			}
+                if (json != null && json.ContainsKey("error"))
+                    return json.Value<string>("error");
+            }
+            catch
+            {
 
-			return null;
-		}
+            }
+
+            return null;
+        }
     }
 }

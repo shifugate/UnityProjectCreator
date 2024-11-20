@@ -1,9 +1,9 @@
-﻿using DG.Tweening;
-using Assets._Scripts.Manager.Popup.Modal.Base;
+﻿using Assets._Scripts.Manager.Popup.Modal.Base;
+using Assets._Scripts.Util;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Assets._Scripts.Util;
 
 namespace Assets._Scripts.Manager.Popup
 {
@@ -30,12 +30,11 @@ namespace Assets._Scripts.Manager.Popup
         [SerializeField] private RectTransform overHolder;
         [SerializeField] private RectTransform underHolder;
 
-        private Dictionary<string, Transform[]> oldOverTransform = new Dictionary<string, Transform[]>();
-        private Dictionary<string, Transform[]> oldUnderTransform = new Dictionary<string, Transform[]>();
+        private readonly Dictionary<string, Transform[]> oldOverTransform = new();
+        private readonly Dictionary<string, Transform[]> oldUnderTransform = new();
 
-        private List<PopupBaseModal> modals = new List<PopupBaseModal>();
+        private readonly List<PopupBaseModal> modals = new();
         private bool overlay;
-        private bool block;
 
         private void Initialize(InitializerManager manager)
         {
@@ -47,7 +46,6 @@ namespace Assets._Scripts.Manager.Popup
         public T ShowModal<T>(bool overlay = true, bool block = true)
         {
             this.overlay = overlay;
-            this.block = block;
 
             overlayCanvasGroup.blocksRaycasts = block;
 
@@ -65,7 +63,7 @@ namespace Assets._Scripts.Manager.Popup
             if (oldOverTransform.ContainsKey(name))
                 return oldOverTransform[name][0].GetComponent<T>();
 
-            return default(T);
+            return default;
         }
 
         public void SetOverHolder(string name, Transform transform = null)
@@ -90,9 +88,11 @@ namespace Assets._Scripts.Manager.Popup
         public T GetUnderHolder<T>(string name)
         {
             if (oldUnderTransform.ContainsKey(name))
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
                 return oldUnderTransform[name][0].GetComponent<T>();
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
 
-            return default(T);
+            return default;
         }
 
         public void SetUnderHolder(string name, Transform transform = null)
@@ -120,7 +120,7 @@ namespace Assets._Scripts.Manager.Popup
                 Show();
 
             if (modals.Count > 0)
-                modals[modals.Count - 1].CanvasGroup.interactable = false;
+                modals[^1].CanvasGroup.interactable = false;
 
             modals.Add(modal);
         }
@@ -132,7 +132,7 @@ namespace Assets._Scripts.Manager.Popup
             if (modals.Count == 0)
                 Hide();
             else
-                modals[modals.Count - 1].CanvasGroup.interactable = true;
+                modals[^1].CanvasGroup.interactable = true;
         }
 
         private void Show()

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets._Scripts.Manager.Setting;
 using Assets._Scripts.Manager.System.Support;
-using Assets._Scripts.Manager.Setting;
+using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Assets._Scripts.Manager.System
 {
@@ -32,12 +33,12 @@ namespace Assets._Scripts.Manager.System
 
         private void SetProperties()
         {
-            if (SettingManager.Instance.Data.max_fps > 0)
-                Application.targetFrameRate = SettingManager.Instance.Data.max_fps;
-            
-            Input.multiTouchEnabled = false;
+            if (SettingManager.Instance.Model.max_fps > 0)
+                Application.targetFrameRate = SettingManager.Instance.Model.max_fps;
 
-            if (SettingManager.Instance.Data.fps_show)
+            EnhancedTouchSupport.Enable();
+
+            if (SettingManager.Instance.Model.fps_show)
                 gameObject.AddComponent<SystemManagerFPSDisplaySupport>();
 
             UnityEngine.ResourceManagement.ResourceManager.ExceptionHandler = (op, ex) => throw ex;

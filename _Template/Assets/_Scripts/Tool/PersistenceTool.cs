@@ -20,7 +20,7 @@ namespace Assets._Scripts.Tool
                 {
                     Directory.Delete(directory, true);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.Log(ex);
                 }

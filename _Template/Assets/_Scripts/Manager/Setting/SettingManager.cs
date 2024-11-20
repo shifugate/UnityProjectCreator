@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using UnityEngine;
-using Assets._Scripts.Manager.Setting.Model;
+﻿using Assets._Scripts.Manager.Setting.Model;
+using Newtonsoft.Json;
 using System.IO;
+using UnityEngine;
 
 namespace Assets._Scripts.Manager.Setting
 {
@@ -23,8 +23,8 @@ namespace Assets._Scripts.Manager.Setting
         }
         #endregion
 
-        private SettingModel data;
-        public SettingModel Data { get { return data; } }
+        private SettingModel model;
+        public SettingModel Model { get { return model; } }
 
         private void Initialize(InitializerManager manager)
         {
@@ -37,7 +37,7 @@ namespace Assets._Scripts.Manager.Setting
         {
 
 #if UNITY_STANDALONE
-            data = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json"));
+            model = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json"));
 #elif UNITY_ANDROID || UNITY_IOS
             Directory.CreateDirectory($"{Application.persistentDataPath}/Manager/Setting/");
 
@@ -51,7 +51,7 @@ namespace Assets._Scripts.Manager.Setting
         public void Save()
         {
 #if UNITY_STANDALONE
-            File.WriteAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(data, Formatting.Indented));
+            File.WriteAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(model, Formatting.Indented));
 #elif UNITY_ANDROID || UNITY_IOS
             File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(data, Formatting.Indented));
 #endif

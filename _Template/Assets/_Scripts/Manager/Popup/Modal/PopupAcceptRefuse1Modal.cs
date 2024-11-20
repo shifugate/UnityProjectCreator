@@ -1,9 +1,9 @@
 ﻿using Assets._Scripts.Manager.Popup.Modal.Base;
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets._Scripts.Manager.Popup.Modal
 {

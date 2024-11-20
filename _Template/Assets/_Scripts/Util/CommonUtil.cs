@@ -1,7 +1,7 @@
-﻿using DG.Tweening;
-using Assets._Scripts.Manager.Language.Token;
+﻿using Assets._Scripts.Manager.Language.Token;
 using Assets._Scripts.Manager.Popup;
 using Assets._Scripts.Manager.Popup.Modal;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,12 +63,24 @@ namespace Assets._Scripts.Util
             }
         }
 
-        public static void ShowError(string error)
+        public static void ShowError(string error, Action completeCallback = null)
         {
             PopupManager.Instance.ShowModal<PopupMessage1Modal>()
-                .Setup(LanguageManagerToken.common.error_token,
+                .Setup(null,
                     error,
-                    LanguageManagerToken.common.close_token);
+                    LanguageManagerToken.common.close_token,
+                    completeCallback);
+        }
+
+        public static string GetStringException(Exception ex)
+        {
+            if (ex?.InnerException?.Message != null)
+                return ex.InnerException.Message;
+
+            if (ex?.Message != null)
+                return ex.Message;
+
+            return ex != null ? ex.ToString() : "Unknow Exception";
         }
     }
 }

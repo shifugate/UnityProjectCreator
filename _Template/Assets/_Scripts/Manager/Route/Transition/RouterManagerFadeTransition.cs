@@ -1,9 +1,9 @@
 ﻿using Assets._Scripts.Manager.Route.Transition.Base;
-using System;
-using UnityEngine;
-using DG.Tweening;
-using TMPro;
 using Assets._Scripts.UI.Load;
+using DG.Tweening;
+using System;
+using TMPro;
+using UnityEngine;
 
 namespace Assets._Scripts.Manager.Route.Transition
 {
@@ -60,7 +60,6 @@ namespace Assets._Scripts.Manager.Route.Transition
         {
             group.DOKill();
             group.DOFade(0, 0.25f)
-                .SetDelay(1)
                 .OnComplete(() =>
                 {
                     callback();

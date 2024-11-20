@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
+using Assets._Scripts.Manager.HTTP;
 using Assets._Scripts.Manager.Language;
+using Assets._Scripts.Manager.Popup;
 using Assets._Scripts.Manager.Route;
 using Assets._Scripts.Manager.Setting;
 using Assets._Scripts.Manager.System;
-using Assets._Scripts.Manager.Keyboard;
 using Assets._Scripts.Manager.Timeout;
-using Assets._Scripts.Manager.Popup;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets._Scripts.Manager
 {
@@ -36,7 +36,7 @@ namespace Assets._Scripts.Manager
             {
                 if (instance == null)
                 {
-                    GameObject go = new GameObject("InitializerManager");
+                    GameObject go = new("InitializerManager");
 
                     instance = go.AddComponent<InitializerManager>();
 
@@ -65,8 +65,8 @@ namespace Assets._Scripts.Manager
             PopupManager.InstanceNW(this);
             LanguageManager.InstanceNW(this);
             SystemManager.InstanceNW(this);
-            KeyboardManager.InstanceNW(this);
             TimeoutManager.InstanceNW(this);
+            HTTPManager.InstanceNW(this);
         }
 
         private IEnumerator InitializeCR()

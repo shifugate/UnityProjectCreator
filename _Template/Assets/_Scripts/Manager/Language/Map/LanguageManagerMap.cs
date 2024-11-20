@@ -9,9 +9,9 @@ namespace Assets._Scripts.Manager.Language.Map
         [HideInInspector]
         public string group = "common";
 
-        [HideInInspector] 
+        [HideInInspector]
         public string keyName;
-        [HideInInspector] 
+        [HideInInspector]
         public string key;
 
         public bool upper;
