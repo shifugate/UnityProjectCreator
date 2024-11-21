@@ -47,10 +47,13 @@ namespace Assets._Scripts.Util
 #endif
         }
 
-        public static void PauseGame()
+        public static void PauseGame(bool pauseTime = true, bool pauseAudio = true)
         {
-            Time.timeScale = 0;
-            AudioListener.pause = true;
+            if (pauseTime)
+                Time.timeScale = 0;
+
+            if (pauseAudio)
+                AudioListener.pause = true;
         }
 
         public static void ResumeGame()

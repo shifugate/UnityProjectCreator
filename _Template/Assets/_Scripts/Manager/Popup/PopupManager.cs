@@ -35,6 +35,8 @@ namespace Assets._Scripts.Manager.Popup
 
         private readonly List<PopupBaseModal> modals = new();
         private bool overlay;
+        private bool pauseTime;
+        private bool pauseAudio;
 
         private void Initialize(InitializerManager manager)
         {
@@ -43,9 +45,11 @@ namespace Assets._Scripts.Manager.Popup
             gameObject.SetActive(false);
         }
 
-        public T ShowModal<T>(bool overlay = true, bool block = true)
+        public T ShowModal<T>(bool overlay = true, bool block = true, bool pauseTime = true, bool pauseAudio = true)
         {
             this.overlay = overlay;
+            this.pauseTime = pauseTime;
+            this.pauseAudio = pauseAudio;
 
             overlayCanvasGroup.blocksRaycasts = block;
 
@@ -61,7 +65,9 @@ namespace Assets._Scripts.Manager.Popup
         public T GetOverHolder<T>(string name)
         {
             if (oldOverTransform.ContainsKey(name))
+#pragma warning disable UNT0014 // Invalid type for call to GetComponent
                 return oldOverTransform[name][0].GetComponent<T>();
+#pragma warning restore UNT0014 // Invalid type for call to GetComponent
 
             return default;
         }
@@ -141,7 +147,7 @@ namespace Assets._Scripts.Manager.Popup
             overlayCanvasGroup.DOFade(overlay ? 1 : 0, 0.25f)
                 .OnStart(() =>
                 {
-                    SystemUtil.PauseGame();
+                    SystemUtil.PauseGame(pauseTime, pauseAudio);
 
                     gameObject.SetActive(true);
                 })
