@@ -15,7 +15,7 @@ namespace Assets._Scripts.Manager.Timeout
         {
             if (instance == null)
             {
-                GameObject go = new GameObject("TimeoutManager");
+                GameObject go = new("TimeoutManager");
 
                 instance = go.AddComponent<TimeoutManager>();
             }
@@ -46,7 +46,7 @@ namespace Assets._Scripts.Manager.Timeout
 
         private void VerifyInput()
         {
-            if (Keyboard.current.anyKey.wasPressedThisFrame || UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 0)
+            if ((Keyboard.current?.anyKey != null && Keyboard.current.anyKey.wasPressedThisFrame) || UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 0)
                 time = 0;
         }
 
