@@ -1,7 +1,6 @@
 ﻿using Assets._Scripts.Manager.Setting;
 using Assets._Scripts.Manager.Timeout.Event;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Assets._Scripts.Manager.Timeout
 {
@@ -46,8 +45,8 @@ namespace Assets._Scripts.Manager.Timeout
 
         private void VerifyInput()
         {
-           if ((Keyboard.current?.anyKey != null && Keyboard.current.anyKey.wasPressedThisFrame) 
-			|| (Mouse.current?.leftButton != null && Mouse.current.leftButton.wasPressedThisFrame)
+           if ((UnityEngine.InputSystem.Keyboard.current?.anyKey != null && UnityEngine.InputSystem.Keyboard.current.anyKey.wasPressedThisFrame) 
+			|| (UnityEngine.InputSystem.Mouse.current?.leftButton != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
 			|| UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 0)
 			time = 0;
         }
