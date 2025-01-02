@@ -44,7 +44,7 @@ namespace Assets._Scripts.Manager.Setting
             if (!File.Exists($"{Application.persistentDataPath}/Manager/Setting/setting.json"))
                 File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", Resources.Load<TextAsset>("Manager/Setting/setting").text);
 
-            data = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json"));
+            model = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json"));
 #endif
         }
 
@@ -53,7 +53,7 @@ namespace Assets._Scripts.Manager.Setting
 #if UNITY_STANDALONE
             File.WriteAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(model, Formatting.Indented));
 #elif UNITY_ANDROID || UNITY_IOS
-            File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(data, Formatting.Indented));
+            File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(model, Formatting.Indented));
 #endif
         }
 
