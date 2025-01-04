@@ -1,3 +1,4 @@
+using Assets._Scripts.Manager.Keyboard;
 using Assets._Scripts.Manager.Language;
 using Assets._Scripts.Manager.Popup;
 using Assets._Scripts.Manager.Route;
@@ -65,6 +66,7 @@ namespace Assets._Scripts.Manager
             LanguageManager.InstanceNW(this);
             SystemManager.InstanceNW(this);
             TimeoutManager.InstanceNW(this);
+            KeyboardManager.InstanceNW(this);
         }
 
         private IEnumerator InitializeCR()
