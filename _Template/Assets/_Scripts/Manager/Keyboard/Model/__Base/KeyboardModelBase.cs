@@ -23,5 +23,6 @@
         public int? show_at;
         public float show_margin;
         public float click_time;
+        public float hide_delay;
     }
 }

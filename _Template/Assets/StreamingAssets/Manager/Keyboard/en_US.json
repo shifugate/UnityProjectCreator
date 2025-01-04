@@ -29,15 +29,16 @@
 		"file": "normal_bg.png",
 		"margin": [10, 10, 10, 10]
 	},
-	"width_key": 100,
-	"height_key": 100,
-	"space_row": 20,
-	"space_key": 20,
-	"margin_x": 20,
-	"margin_y": 20,
+	"width_key": 75,
+	"height_key": 75,
+	"space_row": 4,
+	"space_key": 4,
+	"margin_x": 0,
+	"margin_y": 0,
 	"start_at": 3,
 	"show_at": 3,
 	"show_margin": 50,
 	"click_time": 0.25,
-	"keyboards": [0, 1, 2]
+	"keyboards": [0, 1, 2],
+	"hide_delay": 0.25
 }

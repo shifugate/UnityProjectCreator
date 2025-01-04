@@ -161,6 +161,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(-Screen.width / KeyboardManager.Instance.Scale.x, 0), 0.25f)
+                .SetDelay(keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -174,6 +175,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(0, Screen.height / KeyboardManager.Instance.Scale.y), 0.25f)
+                .SetDelay(keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -187,6 +189,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(Screen.width / KeyboardManager.Instance.Scale.x, 0), 0.25f)
+                .SetDelay(keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -200,6 +203,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(0, -Screen.height / KeyboardManager.Instance.Scale.y), 0.25f)
+                .SetDelay(keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {

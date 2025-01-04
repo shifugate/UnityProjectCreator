@@ -141,6 +141,10 @@
             {
               "normal": "l",
               "shifted": "L"
+            },
+            {
+              "normal": ".",
+              "shifted": "."
             }
           ]
         },
@@ -193,6 +197,7 @@
               "shifted": "M"
             },
             {
+			  "width_key": 154,
               "delete": true,
               "release_key": {
                 "file": "delete_normal_key.png"
@@ -218,13 +223,10 @@
             {
               "normal": " ",
               "shifted": " ",
-			  "width_key": 500
+			  "width_key": 470
             },
             {
-              "normal": ".",
-              "shifted": "."
-            },
-            {
+			  "width_key": 154,
               "enter": true,
               "release_key": {
                 "file": "enter_normal_key.png"

@@ -13,7 +13,6 @@ using Assets._Scripts.Manager.Language;
 using Assets._Scripts.Manager.Keyboard.Key;
 using UnityEngine.Events;
 using Assets._Scripts.Manager.Keyboard.Event;
-using UnityEngine.TextCore.Text;
 
 namespace Assets._Scripts.Manager.Keyboard
 {
