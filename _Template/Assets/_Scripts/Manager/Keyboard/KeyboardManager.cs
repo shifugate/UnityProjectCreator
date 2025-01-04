@@ -348,6 +348,9 @@ namespace Assets._Scripts.Manager.Keyboard
             if (keyboardKeyboardModel.click_time == 0)
                 keyboardKeyboardModel.click_time = keyboardModel.click_time;
 
+            if (keyboardKeyboardModel.hide_delay == 0)
+                keyboardKeyboardModel.hide_delay = keyboardModel.hide_delay;
+
             SetSprite(keyboardKeyboardModel.release_key);
             SetSprite(keyboardKeyboardModel.press_key);
             SetSprite(keyboardKeyboardModel.release_hold_key);
@@ -414,6 +417,9 @@ namespace Assets._Scripts.Manager.Keyboard
 
             if (keyboardKeyboardModel.click_time == 0)
                 keyboardKeyboardModel.click_time = keyboardLevelModel.click_time;
+
+            if (keyboardKeyboardModel.hide_delay == 0)
+                keyboardKeyboardModel.hide_delay = keyboardLevelModel.hide_delay;
 
             SetSprite(keyboardKeyboardModel.release_key);
             SetSprite(keyboardKeyboardModel.press_key);
@@ -482,6 +488,9 @@ namespace Assets._Scripts.Manager.Keyboard
             if (keyboardRowModel.click_time == 0)
                 keyboardRowModel.click_time = keyboardKeyboardModel.click_time;
 
+            if (keyboardRowModel.hide_delay == 0)
+                keyboardRowModel.hide_delay = keyboardKeyboardModel.hide_delay;
+
             SetSprite(keyboardRowModel.release_key);
             SetSprite(keyboardRowModel.press_key);
             SetSprite(keyboardRowModel.release_hold_key);
@@ -548,6 +557,9 @@ namespace Assets._Scripts.Manager.Keyboard
 
             if (keyboardKeyModel.click_time == 0)
                 keyboardKeyModel.click_time = keyboardRowModel.click_time;
+
+            if (keyboardKeyModel.hide_delay == 0)
+                keyboardKeyModel.hide_delay = keyboardRowModel.hide_delay;
 
             SetSprite(keyboardKeyModel.release_key);
             SetSprite(keyboardKeyModel.press_key);
