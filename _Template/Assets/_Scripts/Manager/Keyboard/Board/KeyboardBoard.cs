@@ -103,7 +103,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
                 Instantiate(keyboardRow, rowHolder).Setup(keyboardRowModel);
         }
 
-        private void SetStart()
+        private void SetStart(bool now = false)
         {
             if (!showing)
                 return;
@@ -115,16 +115,16 @@ namespace Assets._Scripts.Manager.Keyboard.Board
             switch (direction)
             {
                 case KeyboardManager.Direction.Left:
-                    SetStartLeft();
+                    SetStartLeft(now);
                     break;
                 case KeyboardManager.Direction.Top:
-                    SetStartTop();
+                    SetStartTop(now);
                     break;
                 case KeyboardManager.Direction.Right:
-                    SetStartRight();
+                    SetStartRight(now);
                     break;
                 case KeyboardManager.Direction.Bottom:
-                    SetStartBottom();
+                    SetStartBottom(now);
                     break;
             }
         }
@@ -157,11 +157,11 @@ namespace Assets._Scripts.Manager.Keyboard.Board
             completeCallback?.Invoke();
         }
 
-        private void SetStartLeft()
+        private void SetStartLeft(bool now = false)
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(-Screen.width / KeyboardManager.Instance.Scale.x, 0), 0.25f)
-                .SetDelay(keyboardKeyboardModel.hide_delay)
+                .SetDelay(now ? 0 : keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -171,11 +171,11 @@ namespace Assets._Scripts.Manager.Keyboard.Board
                 });
         }
 
-        private void SetStartTop()
+        private void SetStartTop(bool now = false)
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(0, Screen.height / KeyboardManager.Instance.Scale.y), 0.25f)
-                .SetDelay(keyboardKeyboardModel.hide_delay)
+                .SetDelay(now ? 0 : keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -185,11 +185,11 @@ namespace Assets._Scripts.Manager.Keyboard.Board
                 });
         }
 
-        private void SetStartRight()
+        private void SetStartRight(bool now = false)
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(Screen.width / KeyboardManager.Instance.Scale.x, 0), 0.25f)
-                .SetDelay(keyboardKeyboardModel.hide_delay)
+                .SetDelay(now ? 0 : keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -199,11 +199,11 @@ namespace Assets._Scripts.Manager.Keyboard.Board
                 });
         }
 
-        private void SetStartBottom()
+        private void SetStartBottom(bool now = false)
         {
             rowHolder.DOKill();
             rowHolder.DOAnchorPos(new Vector2(0, -Screen.height / KeyboardManager.Instance.Scale.y), 0.25f)
-                .SetDelay(keyboardKeyboardModel.hide_delay)
+                .SetDelay(now ? 0 : keyboardKeyboardModel.hide_delay)
                 .OnUpdate(() => KeyboardManagerEvent.OnHideUpdate?.Invoke(this))
                 .OnComplete(() =>
                 {
@@ -256,11 +256,11 @@ namespace Assets._Scripts.Manager.Keyboard.Board
             SetShow(completeCallback);
         }
 
-        private IEnumerator HideCR()
+        private IEnumerator HideCR(bool now = false)
         {
             yield return null;
 
-            SetStart();
+            SetStart(now);
         }
 
         public KeyboardBoard Setup(string language, KeyboardKeyboardModel keyboardKeyboardModel)
@@ -287,7 +287,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
             showCR = StartCoroutine(ShowCR(completeCallback));
         }
 
-        public void Hide()
+        public void Hide(bool now = false)
         {
             if (!gameObject.activeInHierarchy)
                 return;
@@ -298,7 +298,7 @@ namespace Assets._Scripts.Manager.Keyboard.Board
             if (hideCR != null)
                 StopCoroutine(hideCR);
 
-            hideCR = StartCoroutine(HideCR());
+            hideCR = StartCoroutine(HideCR(now));
         }
     }
 }
