@@ -11,7 +11,7 @@ namespace UnityProjectCreator
     {
         private bool running;
         private bool useKeyboard;
-        private bool useTmeout;
+        private bool useTimeout;
 
         private string? projectName;
 
@@ -68,7 +68,7 @@ namespace UnityProjectCreator
                 File.WriteAllText($"{projectName}/Assets/_Scripts/Manager/InitializerManager.cs", initializeManager);
             }
 
-            if (!useTmeout)
+            if (!useTimeout)
             {
                 Directory.Delete($"{projectName}/Assets/_Scripts/Manager/Timeout", true);
 
@@ -113,7 +113,7 @@ namespace UnityProjectCreator
             running = true;
 
             useKeyboard = KeyboardManagerCkb.IsChecked != null && (bool)KeyboardManagerCkb.IsChecked;
-            useTmeout = TimeoutManagerCkb.IsChecked != null && (bool)TimeoutManagerCkb.IsChecked;
+            useTimeout = TimeoutManagerCkb.IsChecked != null && (bool)TimeoutManagerCkb.IsChecked;
             projectName = ProjectTbk.Text;
 
             bool complete = false;

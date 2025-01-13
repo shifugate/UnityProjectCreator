@@ -1,10 +1,10 @@
-using Assets._Scripts.Manager.Keyboard;
 using Assets._Scripts.Manager.Language;
 using Assets._Scripts.Manager.Popup;
 using Assets._Scripts.Manager.Route;
 using Assets._Scripts.Manager.Setting;
 using Assets._Scripts.Manager.System;
 using Assets._Scripts.Manager.Timeout;
+using Assets._Scripts.Manager.Keyboard;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
