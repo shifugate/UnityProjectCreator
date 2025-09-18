@@ -1,5 +1,6 @@
 using System;
 using Coffee.UISoftMaskInternal;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
@@ -7,12 +8,17 @@ using UnityEngine.UI;
 namespace Coffee.UISoftMask
 {
     [ExecuteAlways]
+    [Icon("Packages/com.coffee.softmask-for-ugui/Icons/SoftMaskIcon.png")]
     public class SoftMaskable : MonoBehaviour, IMaterialModifier, IMaskable
     {
 #if UNITY_EDITOR
         private static readonly int s_AlphaClipThreshold = Shader.PropertyToID("_AlphaClipThreshold");
         private static readonly int s_MaskingShapeSubtract = Shader.PropertyToID("_MaskingShapeSubtract");
 #endif
+        private static readonly int s_SoftMaskableStereo = Shader.PropertyToID("_SoftMaskableStereo");
+        private static readonly int s_SoftMaskOutsideColor = Shader.PropertyToID("_SoftMaskOutsideColor");
+        private static readonly int s_SoftMaskTex = Shader.PropertyToID("_SoftMaskTex");
+        private static readonly int s_SoftMaskColor = Shader.PropertyToID("_SoftMaskColor");
         private static readonly int s_AllowDynamicResolution = Shader.PropertyToID("_AllowDynamicResolution");
         private static readonly int s_AllowRenderScale = Shader.PropertyToID("_AllowRenderScale");
         private static readonly int s_SoftMaskingPower = Shader.PropertyToID("_SoftMaskingPower");
@@ -248,7 +254,7 @@ namespace Coffee.UISoftMask
                     threshold = s.softnessRange.average;
                     subtract = true;
                 }
-                else if (_softMask)
+                else
                 {
                     threshold = _softMask.softnessRange.average;
                 }
@@ -256,25 +262,49 @@ namespace Coffee.UISoftMask
 
             localId = (uint)(Mathf.Clamp01(threshold) * (1 << 8) + (subtract ? 1 << 9 : 0) + (localId << 10));
 #endif
-
             var hash = new Hash128(
                 (uint)baseMaterial.GetInstanceID(),
                 (uint)_softMask.softMaskBuffer.GetInstanceID(),
                 (uint)(_stencilBits + (isStereo ? 1 << 8 : 0) + (useStencil ? 1 << 9 : 0) + (_softMaskDepth << 10)),
                 localId);
-            MaterialRepository.Get(hash, ref _maskableMaterial,
-                x => SoftMaskUtils.CreateSoftMaskable(x.baseMaterial, x.softMaskBuffer, x._softMaskDepth,
-                    x._stencilBits, x.isStereo),
-                (baseMaterial, _softMask.softMaskBuffer, _softMaskDepth, _stencilBits, isStereo));
+            if (!MaterialRepository.Valid(hash, _maskableMaterial))
+            {
+                Profiler.BeginSample("(SM4UI)[SoftMaskableMaterial] GetModifiedMaterial > Get or create material");
+                MaterialRepository.Get(hash, ref _maskableMaterial, x => new Material(x)
+                {
+                    shader = UISoftMaskProjectSettings.shaderRegistry.FindOptionalShader(x.shader,
+                        "(SoftMaskable)",
+                        "Hidden/{0} (SoftMaskable)",
+                        "Hidden/UI/Default (SoftMaskable)"),
+                    hideFlags = HideFlags.HideAndDontSave
+                }, baseMaterial);
+                Profiler.EndSample();
+            }
             Profiler.EndSample();
+
+            Profiler.BeginSample("(SM4UI)[SoftMaskableMaterial] Create > Set Properties");
+            _maskableMaterial.CopyPropertiesFromMaterial(baseMaterial);
+            _maskableMaterial.SetInt(s_AllowDynamicResolution, _softMask.allowDynamicResolution ? 1 : 0);
+            _maskableMaterial.SetInt(s_AllowRenderScale, _softMask.allowRenderScale ? 1 : 0);
+            _maskableMaterial.SetFloat(s_SoftMaskingPower, power);
+            _maskableMaterial.SetTexture(s_SoftMaskTex, _softMask.softMaskBuffer);
+            _maskableMaterial.SetInt(s_SoftMaskableStereo, isStereo ? 1 : 0);
+            _maskableMaterial.SetVector(s_SoftMaskColor, new Vector4(
+                0 <= _softMaskDepth ? 1 : 0,
+                1 <= _softMaskDepth ? 1 : 0,
+                2 <= _softMaskDepth ? 1 : 0,
+                3 <= _softMaskDepth ? 1 : 0
+            ));
+            _maskableMaterial.EnableKeyword("SOFTMASKABLE");
 
 #if UNITY_EDITOR
             _maskableMaterial.SetFloat(s_AlphaClipThreshold, threshold);
             _maskableMaterial.SetInt(s_MaskingShapeSubtract, subtract ? 1 : 0);
+            UISoftMaskProjectSettings.shaderRegistry.RegisterVariant(_maskableMaterial, "UI > Soft Mask");
+            _maskableMaterial.SetVector(s_SoftMaskOutsideColor,
+                UISoftMaskProjectSettings.useStencilOutsideScreen ? Vector4.one : Vector4.zero);
 #endif
-            _maskableMaterial.SetInt(s_AllowDynamicResolution, _softMask.allowDynamicResolution ? 1 : 0);
-            _maskableMaterial.SetInt(s_AllowRenderScale, _softMask.allowRenderScale ? 1 : 0);
-            _maskableMaterial.SetFloat(s_SoftMaskingPower, power);
+            Profiler.EndSample();
             return _maskableMaterial;
         }
 
@@ -306,6 +336,7 @@ namespace Coffee.UISoftMask
         {
             if (!isActiveAndEnabled || !_graphic) return;
             _graphic.SetMaterialDirty();
+            Misc.QueuePlayerLoopUpdate();
         }
 
         public void SetMaterialDirtyForChildren()
@@ -323,6 +354,11 @@ namespace Coffee.UISoftMask
             }
         }
 
+        internal void ReleaseMaterial()
+        {
+            MaterialRepository.Release(ref _maskableMaterial);
+        }
+
         private void UpdateHideFlags()
         {
             hideFlags = ignoreSelf || ignoreChildren || !Mathf.Approximately(power, 1f)
@@ -338,55 +374,48 @@ namespace Coffee.UISoftMask
 
         private Action _updateSceneViewMatrix;
         private static readonly int s_GameVp = Shader.PropertyToID("_GameVP");
-        private static readonly int s_GameTvp = Shader.PropertyToID("_GameTVP");
         private static readonly int s_GameVp2 = Shader.PropertyToID("_GameVP_2");
-        private static readonly int s_GameTvp2 = Shader.PropertyToID("_GameTVP_2");
         private void UpdateSceneViewMatrix()
         {
             if (!_graphic || !_graphic.canvas || !_maskableMaterial) return;
-            if (FrameCache.TryGet(_maskableMaterial, nameof(UpdateSceneViewMatrix), out bool _))
+
+            var mat = _graphic.GetMaterialForRendering();
+            if (!mat || FrameCache.TryGet(mat, nameof(UpdateSceneViewMatrix), out bool _))
             {
                 return;
             }
 
             var canvas = _graphic.canvas.rootCanvas;
             var isStereo = UISoftMaskProjectSettings.stereoEnabled && canvas.IsStereoCanvas();
-            if (!FrameCache.TryGet(canvas, "GameVp", out Matrix4x4 gameVp) ||
-                !FrameCache.TryGet(canvas, "GameTvp", out Matrix4x4 gameTvp))
+            if (!FrameCache.TryGet(canvas, "GameVp", out Matrix4x4 gameVp))
             {
-                Profiler.BeginSample("(SM4UI)[SoftMaskable] (Editor) UpdateSceneViewMatrix > Calc GameVp & GameTvp");
+                Profiler.BeginSample("(SM4UI)[SoftMaskable] (Editor) UpdateSceneViewMatrix > Calc GameVp");
                 var rt = canvas.transform as RectTransform;
                 var cam = canvas.worldCamera;
                 if (canvas && canvas.renderMode != RenderMode.ScreenSpaceOverlay && cam)
                 {
                     var eye = isStereo ? Camera.MonoOrStereoscopicEye.Left : Camera.MonoOrStereoscopicEye.Mono;
                     canvas.GetViewProjectionMatrix(eye, out var vMatrix, out var pMatrix);
-                    gameVp = gameTvp = pMatrix * vMatrix;
+                    gameVp = pMatrix * vMatrix;
                 }
                 else if (rt != null)
                 {
                     var pos = rt.position;
-                    var scale = rt.localScale.x;
-                    var size = rt.sizeDelta;
-                    gameVp = Matrix4x4.TRS(new Vector3(0, 0, 0.5f), Quaternion.identity,
-                        new Vector3(2 / size.x, 2 / size.y, 0.0005f * scale));
-                    gameTvp = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity,
+                    gameVp = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity,
                         new Vector3(1 / pos.x, 1 / pos.y, -2 / 2000f)) * Matrix4x4.Translate(-pos);
                 }
                 else
                 {
-                    gameVp = gameTvp = Matrix4x4.identity;
+                    gameVp = Matrix4x4.identity;
                 }
 
                 FrameCache.Set(canvas, "GameVp", gameVp);
-                FrameCache.Set(canvas, "GameTvp", gameTvp);
                 Profiler.EndSample();
             }
 
             // Set view and projection matrices.
             Profiler.BeginSample("(SM4UI)[SoftMaskable] (Editor) UpdateSceneViewMatrix > Set matrices");
-            _maskableMaterial.SetMatrix(s_GameVp, gameVp);
-            _maskableMaterial.SetMatrix(s_GameTvp, gameTvp);
+            mat.SetMatrix(s_GameVp, gameVp);
             Profiler.EndSample();
 
             // Calc Right eye matrices.
@@ -403,11 +432,10 @@ namespace Coffee.UISoftMask
                     Profiler.EndSample();
                 }
 
-                _maskableMaterial.SetMatrix(s_GameVp2, gameVp);
-                _maskableMaterial.SetMatrix(s_GameTvp2, gameVp);
+                mat.SetMatrix(s_GameVp2, gameVp);
             }
 
-            FrameCache.Set(_maskableMaterial, nameof(UpdateSceneViewMatrix), true);
+            FrameCache.Set(mat, nameof(UpdateSceneViewMatrix), true);
         }
 #endif
     }

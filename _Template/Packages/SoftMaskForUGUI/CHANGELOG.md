@@ -1,3 +1,64 @@
+## [3.3.4](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.3.3...3.3.4) (2025-06-13)
+
+
+### Bug Fixes
+
+* `RectTransformFitter` ignores target's pivot ([b2186ac](https://github.com/mob-sakai/SoftMaskForUGUI/commit/b2186ac51ebd2052c4167aef2a3a95fe78090294)), closes [#242](https://github.com/mob-sakai/SoftMaskForUGUI/issues/242)
+
+## [3.3.3](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.3.2...3.3.3) (2025-06-12)
+
+
+### Bug Fixes
+
+* LICENSE.md conflicts with another package's LICENSE.md ([bba38ad](https://github.com/mob-sakai/SoftMaskForUGUI/commit/bba38adeee36c2d64f2399d3daf18a397d0eae8d)), closes [#248](https://github.com/mob-sakai/SoftMaskForUGUI/issues/248)
+* TextMeshPro 3.2.0-pre support ([56c3d0e](https://github.com/mob-sakai/SoftMaskForUGUI/commit/56c3d0e1765b90b991663babb8a2a1ec9a48792c)), closes [#245](https://github.com/mob-sakai/SoftMaskForUGUI/issues/245) [#247](https://github.com/mob-sakai/SoftMaskForUGUI/issues/247)
+
+## [3.3.2](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.3.1...3.3.2) (2025-04-23)
+
+
+### Bug Fixes
+
+* NullReferenceException in MaskingShape component when in prefab mode (editor) ([9cc6e68](https://github.com/mob-sakai/SoftMaskForUGUI/commit/9cc6e68ca748bc6ab20a055a348f68f29f03ce37)), closes [#240](https://github.com/mob-sakai/SoftMaskForUGUI/issues/240)
+
+## [3.3.1](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.3.0...3.3.1) (2025-04-18)
+
+
+### Bug Fixes
+
+* ShaderGraphs invisible when not masked in scene view ([105713b](https://github.com/mob-sakai/SoftMaskForUGUI/commit/105713b0e82cdf4cb434892469f2200310ed0561)), closes [#238](https://github.com/mob-sakai/SoftMaskForUGUI/issues/238)
+
+# [3.3.0](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.2.4...3.3.0) (2025-03-28)
+
+
+### Bug Fixes
+
+* soft-masked graphics are not displayed correctly in the game view (editor, OpenGLES3) ([2bf00fc](https://github.com/mob-sakai/SoftMaskForUGUI/commit/2bf00fccde0ec2aea68852833bf31c23b30c4df7)), closes [#232](https://github.com/mob-sakai/SoftMaskForUGUI/issues/232)
+
+
+### Features
+
+* add a tool that automatically fixes shaders when 'TextMeshPro Essential Resources' are located in a non-default path ([03b5e47](https://github.com/mob-sakai/SoftMaskForUGUI/commit/03b5e47e08e000adcef3246edc320a6ff9d62e81)), closes [#233](https://github.com/mob-sakai/SoftMaskForUGUI/issues/233)
+* add shaders for TextMeshPro Overlay/SSD ([e4d974e](https://github.com/mob-sakai/SoftMaskForUGUI/commit/e4d974e76d7f8766739afb40af9f77dfff4bd8f9)), closes [#230](https://github.com/mob-sakai/SoftMaskForUGUI/issues/230)
+* shader graph support no longer requires an additional render feature ([bb057af](https://github.com/mob-sakai/SoftMaskForUGUI/commit/bb057af80fb239d5b76e66dc7b28e65c5eab45db))
+* support `UIEffect` package with `SoftMaskable` ([47dcacb](https://github.com/mob-sakai/SoftMaskForUGUI/commit/47dcacb1d322e7b5327c929a48c61fff360894ac)), closes [#229](https://github.com/mob-sakai/SoftMaskForUGUI/issues/229)
+
+## [3.2.4](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.2.3...3.2.4) (2025-03-06)
+
+
+### Bug Fixes
+
+* 'IconAttribute' is inaccessible due to its protection level on older versions of Unity ([4ad0c6b](https://github.com/mob-sakai/SoftMaskForUGUI/commit/4ad0c6b5a7d8b8887b5b555cf6183fbbd6e70808)), closes [#234](https://github.com/mob-sakai/SoftMaskForUGUI/issues/234)
+* IL2CPP build fails on older versions of Unity ([8a9a1a1](https://github.com/mob-sakai/SoftMaskForUGUI/commit/8a9a1a11f6f28befdce2dcdec5cc8d779df492ac))
+
+## [3.2.3](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.2.2...3.2.3) (2025-02-28)
+
+
+### Bug Fixes
+
+* component icons will no longer be displayed in the scene view (Unity 2021.2 or later) ([b38dd4c](https://github.com/mob-sakai/SoftMaskForUGUI/commit/b38dd4c46b386e7780e60752b8bd39203cd8d811))
+* fix potential issues ([3377af2](https://github.com/mob-sakai/SoftMaskForUGUI/commit/3377af2d2a62dfe790e92d76b91f04b43c8ae763))
+* remove warn CS0618 ([04f587c](https://github.com/mob-sakai/SoftMaskForUGUI/commit/04f587c5d54462e43074629225662d18e007c1be))
+
 ## [3.2.2](https://github.com/mob-sakai/SoftMaskForUGUI/compare/3.2.1...3.2.2) (2025-01-18)
 
 

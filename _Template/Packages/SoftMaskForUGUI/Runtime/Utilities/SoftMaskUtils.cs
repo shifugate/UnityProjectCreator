@@ -38,10 +38,6 @@ namespace Coffee.UISoftMask
 
         private static Material s_SoftMaskingMaterialAdd;
         private static Material s_SoftMaskingMaterialSub;
-        private static readonly int s_SoftMaskableStereo = Shader.PropertyToID("_SoftMaskableStereo");
-        private static readonly int s_SoftMaskOutsideColor = Shader.PropertyToID("_SoftMaskOutsideColor");
-        private static readonly int s_SoftMaskTex = Shader.PropertyToID("_SoftMaskTex");
-        private static readonly int s_SoftMaskColor = Shader.PropertyToID("_SoftMaskColor");
         private static readonly int s_MainTex = Shader.PropertyToID("_MainTex");
         private static readonly int s_ColorMask = Shader.PropertyToID("_ColorMask");
         private static readonly int s_BlendOp = Shader.PropertyToID("_BlendOp");
@@ -100,6 +96,32 @@ namespace Coffee.UISoftMask
                 }
             };
 
+#if UNITY_EDITOR
+            if (!Misc.isBatchOrBuilding)
+            {
+                // Enable the 'SOFTMASK_EDITOR' keyword only when drawing in the scene view camera.
+                RenderPipelineManager.beginCameraRendering += (_, c) => EnableSoftMaskEditor(true, c);
+                RenderPipelineManager.endCameraRendering += (_, c) => EnableSoftMaskEditor(false, c);
+                Camera.onPreRender += c => EnableSoftMaskEditor(true, c);
+                Camera.onPostRender += c => EnableSoftMaskEditor(false, c);
+
+                void EnableSoftMaskEditor(bool begin, Camera cam)
+                {
+                    if (cam.cameraType == CameraType.SceneView)
+                    {
+                        if (begin)
+                        {
+                            Shader.EnableKeyword("SOFTMASK_EDITOR");
+                        }
+                        else
+                        {
+                            Shader.DisableKeyword("SOFTMASK_EDITOR");
+                        }
+                    }
+                }
+            }
+#endif
+
 #if TMP_ENABLE
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(UpdateMeshUI);
 #endif
@@ -112,13 +134,17 @@ namespace Coffee.UISoftMask
 
             if (text.TryGetComponent<SoftMask>(out var sm))
             {
+#pragma warning disable CS0618
                 (sm as IMeshModifier).ModifyMesh(text.mesh);
+#pragma warning restore CS0618
                 UpdateSubMeshUI(text, sm.enabled, sm.showMaskGraphic, sm.antiAliasingThreshold, sm.softnessRange,
                     MaskingShape.MaskingMethod.Additive);
             }
             else if (text.TryGetComponent<MaskingShape>(out var ms))
             {
+#pragma warning disable CS0618
                 (ms as IMeshModifier).ModifyMesh(text.mesh);
+#pragma warning restore CS0618
                 UpdateSubMeshUI(text, ms.enabled, ms.showMaskGraphic, ms.antiAliasingThreshold, ms.softnessRange,
                     ms.maskingMethod);
             }
@@ -139,7 +165,9 @@ namespace Coffee.UISoftMask
                 maskingShape.antiAliasingThreshold = aa;
                 maskingShape.softnessRange = softness;
                 maskingShape.showMaskGraphic = show;
+#pragma warning disable CS0618
                 (maskingShape as IMeshModifier).ModifyMesh(subMeshes[i].mesh);
+#pragma warning restore CS0618
             }
 
             InternalListPool<TMP_SubMeshUI>.Return(ref subMeshes);
@@ -189,45 +217,6 @@ namespace Coffee.UISoftMask
 
 #if UNITY_EDITOR
             UISoftMaskProjectSettings.shaderRegistry.RegisterVariant(mat, "UI > Soft Mask");
-#endif
-            return mat;
-        }
-
-        public static Material CreateSoftMaskable(
-            Material baseMat,
-            Texture softMaskBuffer,
-            int softMaskDepth,
-            int stencilBits,
-            bool isStereo)
-        {
-            Profiler.BeginSample("(SM4UI)[SoftMaskableMaterial] Create > Create New Material");
-            var mat = new Material(baseMat)
-            {
-                shader = UISoftMaskProjectSettings.shaderRegistry.FindOptionalShader(baseMat.shader,
-                    "(SoftMaskable)",
-                    "Hidden/{0} (SoftMaskable)",
-                    "Hidden/UI/Default (SoftMaskable)"),
-                hideFlags = HideFlags.HideAndDontSave
-            };
-            Profiler.EndSample();
-
-            Profiler.BeginSample("(SM4UI)[SoftMaskableMaterial] Create > Set Properties");
-            mat.SetTexture(s_SoftMaskTex, softMaskBuffer);
-            mat.SetInt(s_SoftMaskableStereo, isStereo ? 1 : 0);
-            mat.SetVector(s_SoftMaskColor, new Vector4(
-                0 <= softMaskDepth ? 1 : 0,
-                1 <= softMaskDepth ? 1 : 0,
-                2 <= softMaskDepth ? 1 : 0,
-                3 <= softMaskDepth ? 1 : 0
-            ));
-            mat.EnableKeyword("SOFTMASKABLE");
-            Profiler.EndSample();
-
-#if UNITY_EDITOR
-            UISoftMaskProjectSettings.shaderRegistry.RegisterVariant(mat, "UI > Soft Mask");
-            mat.EnableKeyword("SOFTMASK_EDITOR");
-            mat.SetVector(s_SoftMaskOutsideColor,
-                UISoftMaskProjectSettings.useStencilOutsideScreen ? Vector4.one : Vector4.zero);
 #endif
             return mat;
         }

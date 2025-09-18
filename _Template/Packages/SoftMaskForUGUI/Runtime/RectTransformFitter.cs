@@ -12,6 +12,7 @@ namespace Coffee.UISoftMask
     /// </summary>
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
+    [Icon("Packages/com.coffee.softmask-for-ugui/Icons/SoftMaskIcon.png")]
     [DisallowMultipleComponent]
     public sealed class RectTransformFitter : MonoBehaviour, ILayoutElement, ILayoutIgnorer
     {
@@ -220,7 +221,8 @@ namespace Coffee.UISoftMask
             // Pivot & Anchor
             if (0 < (m_TargetProperties & (RectTransformProperties.SizeDelta | RectTransformProperties.Position)))
             {
-                _rectTransform.pivot = _rectTransform.anchorMax = _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                _rectTransform.anchorMax = _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                _rectTransform.pivot = m_Target.pivot;
             }
 
             Profiler.EndSample();

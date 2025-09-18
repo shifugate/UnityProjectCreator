@@ -1,3 +1,4 @@
+using Coffee.UISoftMaskInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Coffee.UISoftMask
     [ExecuteAlways]
     [RequireComponent(typeof(Graphic))]
     [DisallowMultipleComponent]
+    [Icon("Packages/com.coffee.softmask-for-ugui/Icons/SoftMaskIcon.png")]
     public class AlphaHitTestTarget : MonoBehaviour, ICanvasRaycastFilter
     {
         private Graphic _graphic;

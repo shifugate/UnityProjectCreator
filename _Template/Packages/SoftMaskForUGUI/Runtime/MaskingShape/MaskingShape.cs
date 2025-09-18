@@ -12,6 +12,7 @@ namespace Coffee.UISoftMask
     [ExecuteAlways]
     [RequireComponent(typeof(Graphic))]
     [DisallowMultipleComponent]
+    [Icon("Packages/com.coffee.softmask-for-ugui/Icons/SoftMaskIcon.png")]
     public class MaskingShape : UIBehaviour, IMeshModifier, IMaterialModifier, IComparable<MaskingShape>, IMaskable
     {
         public enum MaskingMethod
@@ -365,12 +366,13 @@ namespace Coffee.UISoftMask
 
         private void UpdateContainer()
         {
-            Mask mask = null;
             MaskingShapeContainer newContainer = null;
             if (isActiveAndEnabled)
             {
                 var useStencil = UISoftMaskProjectSettings.useStencilOutsideScreen;
-                Utils.GetStencilBits(transform, false, useStencil, out mask, out var _);
+                Utils.GetStencilBits(transform, false, useStencil, out var mask, out var _);
+                if (!mask) return;
+
                 newContainer = mask.GetOrAddComponent<MaskingShapeContainer>();
             }
 

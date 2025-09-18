@@ -1,25 +1,25 @@
 Shader "Hidden/TextMeshPro/Mobile/Bitmap (SoftMaskable)" {
 
 Properties {
-	_MainTex		("Font Atlas", 2D) = "white" {}
-	[HDR]_Color		("Text Color", Color) = (1,1,1,1)
-	_DiffusePower	("Diffuse Power", Range(1.0,4.0)) = 1.0
+	_MainTex		    ("Font Atlas", 2D) = "white" {}
+	_Color		        ("Text Color", Color) = (1,1,1,1)
+	_DiffusePower	    ("Diffuse Power", Range(1.0,4.0)) = 1.0
 
-	_VertexOffsetX("Vertex OffsetX", float) = 0
-	_VertexOffsetY("Vertex OffsetY", float) = 0
-	_MaskSoftnessX("Mask SoftnessX", float) = 0
-	_MaskSoftnessY("Mask SoftnessY", float) = 0
+	_VertexOffsetX      ("Vertex OffsetX", float) = 0
+	_VertexOffsetY      ("Vertex OffsetY", float) = 0
+	_MaskSoftnessX      ("Mask SoftnessX", float) = 0
+	_MaskSoftnessY      ("Mask SoftnessY", float) = 0
 
-	_ClipRect("Clip Rect", vector) = (-32767, -32767, 32767, 32767)
+	_ClipRect           ("Clip Rect", vector) = (-32767, -32767, 32767, 32767)
 
-	_StencilComp("Stencil Comparison", Float) = 8
-	_Stencil("Stencil ID", Float) = 0
-	_StencilOp("Stencil Operation", Float) = 0
-	_StencilWriteMask("Stencil Write Mask", Float) = 255
-	_StencilReadMask("Stencil Read Mask", Float) = 255
+	_StencilComp        ("Stencil Comparison", Float) = 8
+	_Stencil            ("Stencil ID", Float) = 0
+	_StencilOp          ("Stencil Operation", Float) = 0
+	_StencilWriteMask   ("Stencil Write Mask", Float) = 255
+	_StencilReadMask    ("Stencil Read Mask", Float) = 255
 
-	_CullMode("Cull Mode", Float) = 0
-	_ColorMask("Color Mask", Float) = 15
+	_CullMode           ("Cull Mode", Float) = 0
+	_ColorMask          ("Color Mask", Float) = 15
 }
 
 SubShader {
@@ -41,7 +41,7 @@ SubShader {
 	ZTest [unity_GUIZTestMode]
 	ZWrite Off
 	Fog { Mode Off }
-	Blend SrcAlpha OneMinusSrcAlpha
+	Blend One OneMinusSrcAlpha
 	ColorMask[_ColorMask]
 
 	Pass {
@@ -55,24 +55,35 @@ SubShader {
 
 
 		#include "UnityCG.cginc"
+		#include "UnityUI.cginc"
 
-		#include "Packages/com.coffee.softmask-for-ugui/Shaders/SoftMask.cginc" // Add for soft mask
-		#pragma shader_feature_local _ SOFTMASK_EDITOR // Add for soft mask
-		#pragma shader_feature_local _ SOFTMASKABLE // Add for soft mask
+        // ==== SOFTMASKABLE START ====
+        #pragma shader_feature _ SOFTMASK_EDITOR
+        #pragma shader_feature_local_fragment _ SOFTMASKABLE
+        #if SOFTMASKABLE
+        #include "Packages/com.coffee.softmask-for-ugui/Shaders/SoftMask.cginc"
+        #endif
+        // ==== SOFTMASKABLE END ====
 
-		struct appdata_t {
+		struct appdata_t
+		{
 			float4 vertex : POSITION;
 			fixed4 color : COLOR;
 			float2 texcoord0 : TEXCOORD0;
 			float2 texcoord1 : TEXCOORD1;
 		};
 
-		struct v2f {
+		struct v2f
+		{
 			float4 vertex		: POSITION;
 			fixed4 color		: COLOR;
 			float2 texcoord0	: TEXCOORD0;
 			float4 mask			: TEXCOORD2;
-			EDITOR_ONLY(float4 worldPosition : TEXCOORD3;) // Add for soft mask
+			// ==== SOFTMASKABLE START ====
+			#if SOFTMASK_EDITOR
+			float4 worldPosition : TEXCOORD3;
+			#endif
+			// ==== SOFTMASKABLE END ====
 		};
 
 		sampler2D 	_MainTex;
@@ -84,6 +95,9 @@ SubShader {
 		uniform float4		_ClipRect;
 		uniform float		_MaskSoftnessX;
 		uniform float		_MaskSoftnessY;
+		uniform float		_UIMaskSoftnessX;
+        uniform float		_UIMaskSoftnessY;
+        uniform int _UIVertexColorAlwaysGammaSpace;
 
 		v2f vert (appdata_t v)
 		{
@@ -93,8 +107,11 @@ SubShader {
 			vert.y += _VertexOffsetY;
 
 			vert.xy += (vert.w * 0.5) / _ScreenParams.xy;
-
-			OUT.vertex = UnityPixelSnap(UnityObjectToClipPos(vert));
+            if (_UIVertexColorAlwaysGammaSpace && !IsGammaSpace())
+            {
+                v.color.rgb = UIGammaToLinear(v.color.rgb);
+            }
+            OUT.vertex = UnityPixelSnap(UnityObjectToClipPos(vert));
 			OUT.color = v.color;
 			OUT.color *= _Color;
 			OUT.color.rgb *= _DiffusePower;
@@ -104,10 +121,15 @@ SubShader {
 			//pixelSize /= abs(float2(_ScreenParams.x * UNITY_MATRIX_P[0][0], _ScreenParams.y * UNITY_MATRIX_P[1][1]));
 
 			// Clamp _ClipRect to 16bit.
-			float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
-			OUT.mask = float4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * half2(_MaskSoftnessX, _MaskSoftnessY) + pixelSize.xy));
+			const float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
+			const half2 maskSoftness = half2(max(_UIMaskSoftnessX, _MaskSoftnessX), max(_UIMaskSoftnessY, _MaskSoftnessY));
+			OUT.mask = float4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * maskSoftness + pixelSize.xy));
 
-			EDITOR_ONLY(OUT.worldPosition = v.vertex); // Add for soft mask
+			// ==== SOFTMASKABLE START ====
+			#if SOFTMASK_EDITOR
+			OUT.worldPosition = v.vertex;
+			#endif
+			// ==== SOFTMASKABLE END ====
 
 			return OUT;
 		}
@@ -115,6 +137,7 @@ SubShader {
 		fixed4 frag (v2f IN) : COLOR
 		{
 			fixed4 color = fixed4(IN.color.rgb, IN.color.a * tex2D(_MainTex, IN.texcoord0).a);
+			color.rgb *= color.a;
 
 			// Alternative implementation to UnityGet2DClipping with support for softness.
 			#if UNITY_UI_CLIP_RECT
@@ -122,7 +145,11 @@ SubShader {
 				color *= m.x * m.y;
 			#endif
 
-			color *= SoftMask(IN.vertex, IN.worldPosition, color.a); // Add for soft mask
+            // ==== SOFTMASKABLE START ====
+            #if SOFTMASKABLE
+            color *= SoftMask(IN.vertex, IN.worldPosition, color.a);
+            #endif
+            // ==== SOFTMASKABLE END ====
 
 			#if UNITY_UI_ALPHACLIP
 				clip(color.a - 0.001);
