@@ -39,27 +39,8 @@ namespace Assets._Scripts.Manager.Setting
 #if UNITY_STANDALONE
             model = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json"));
 #elif UNITY_ANDROID || UNITY_IOS
-            Directory.CreateDirectory($"{Application.persistentDataPath}/Manager/Setting/");
-
-            if (!File.Exists($"{Application.persistentDataPath}/Manager/Setting/setting.json"))
-                File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", Resources.Load<TextAsset>("Manager/Setting/setting").text);
-
-            model = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json"));
+            model = JsonConvert.DeserializeObject<SettingModel>(Resources.Load<TextAsset>("Manager/Setting/setting").text);
 #endif
-        }
-
-        public void Save()
-        {
-#if UNITY_STANDALONE
-            File.WriteAllText($"{Application.streamingAssetsPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(model, Formatting.Indented));
-#elif UNITY_ANDROID || UNITY_IOS
-            File.WriteAllText($"{Application.persistentDataPath}/Manager/Setting/setting.json", JsonConvert.SerializeObject(model, Formatting.Indented));
-#endif
-        }
-
-        public void Reload()
-        {
-            SetProperties();
         }
     }
 }
